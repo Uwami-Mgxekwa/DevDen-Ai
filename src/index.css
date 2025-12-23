@@ -15,6 +15,7 @@
   --panel-border: rgba(0, 0, 0, 0.07);
   --panel-shadow: 0 15px 60px rgba(0, 0, 0, 0.12);
 
+  --app-font-size: 16px;
   --text-primary: #0f172a;
   --muted: #6b7280;
   --muted-strong: #475569;
@@ -77,4 +78,9 @@ body {
   margin: 0;
   background: var(--page-bg);
   transition: background 0.4s ease;
+}
+
+.reduce-motion * {
+  transition: none !important;
+  animation-duration: 0s !important;
 }

@@ -11,32 +11,36 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-4 flex flex-col">
-        <div className="flex-1 overflow-y-auto mb-4">
-          {messages.map((msg, i) => (
-            <div
-              key={i}
-              className={`p-2 my-1 rounded ${
-                msg.sender === "user"
-                  ? "bg-blue-500 text-white self-end"
-                  : "bg-gray-200 text-black self-start"
-              }`}
-            >
-              {msg.text}
-            </div>
-          ))}
+    <div className="flex items-center justify-center h-screen bg-gray-100">
+      <div className="w-full max-w-md h-[90vh] bg-white shadow-lg rounded-lg flex flex-col p-4">
+        <div className="flex-1 overflow-y-auto space-y-2 mb-4">
+          {messages.length === 0 ? (
+            <div className="text-center text-gray-400 mt-20">No messages yet</div>
+          ) : (
+            messages.map((msg, i) => (
+              <div
+                key={i}
+                className={`p-3 rounded-lg max-w-[80%] ${
+                  msg.sender === "user"
+                    ? "bg-blue-500 text-white self-end ml-auto"
+                    : "bg-gray-200 text-black self-start"
+                }`}
+              >
+                {msg.text}
+              </div>
+            ))
+          )}
         </div>
-        <div className="flex">
+        <div className="flex gap-2">
           <input
-            className="flex-1 border rounded p-2 mr-2"
+            className="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type a message..."
           />
           <button
             onClick={handleSend}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
           >
             Send
           </button>

@@ -1,5 +1,60 @@
 import { useEffect, useRef, useState } from "react";
 
+// Icon Components
+const WaveIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M7 12c0 2.76 2.24 5 5 5s5-2.24 5-5-2.24-5-5-5-5 2.24 5 5zm5-3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"/>
+  </svg>
+);
+
+const ClockIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/>
+  </svg>
+);
+
+const CalendarIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+  </svg>
+);
+
+const TargetIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-8c0-2.76 2.24-5 5-5s5 2.24 5 5-2.24 5-5 5-5-2.24-5-5zm3 0c0 1.1.9 2 2 2s2-.9 2-2-.9-2-2-2-2 .9-2 2z"/>
+  </svg>
+);
+
+const UserIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+  </svg>
+);
+
+const SmileIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9c.83 0 1.5-.67 1.5-1.5S7.83 8 7 8s-1.5.67-1.5 1.5S6.17 11 7 11zm10 0c.83 0 1.5-.67 1.5-1.5S17.83 8 17 8s-1.5.67-1.5 1.5.67 1.5 1.5 1.5zm-5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
+  </svg>
+);
+
+const MicIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+  </svg>
+);
+
+const RecordIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <circle cx="12" cy="12" r="8"/>
+  </svg>
+);
+
+const DocumentIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+  </svg>
+);
+
 function App() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -10,15 +65,19 @@ function App() {
   const [userName, setUserName] = useState("");
   const [awaitingName, setAwaitingName] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [learningGoals, setLearningGoals] = useState([]);
+  const [isListening, setIsListening] = useState(false);
+  const [lastActivity, setLastActivity] = useState(Date.now());
+  const [showExportMenu, setShowExportMenu] = useState(false);
   const isDark = theme === "dark";
   const messagesEndRef = useRef(null);
   const MAX_MESSAGE_LEN = 600;
 
   const funnyResponses = [
-    "Learn to follow instructions, smarty pants! 😏 Just type a language keyword like HTML, Java, or JavaScript.",
-    "Uwami doesn't like it when people don't listen! 😤 Enter a programming language keyword only (e.g., HTML, Python, Java).",
+    "Learn to follow instructions, smarty pants! Just type a language keyword like HTML, Java, or JavaScript.",
+    "Uwami doesn't like it when people don't listen! Enter a programming language keyword only (e.g., HTML, Python, Java).",
     "Oops! I only understand language keywords. Try: HTML, CSS, JavaScript, Python, Java, C++, SQL, etc.",
-    "Nice try! But I'm a simple bot—just give me a language name like 'Python' or 'React' and I'll tell you all about it! 😄",
+    "Nice try! But I'm a simple bot—just give me a language name like 'Python' or 'React' and I'll tell you all about it!",
     "Hey there! I only respond to programming language keywords. Type something like 'HTML' or 'Java' to get started!",
   ];
 
@@ -355,13 +414,214 @@ function App() {
   };
 
   const quickPrompts = ["HTML", "CSS", "JavaScript", "Python", "Java", "TypeScript", "C", "Rust", "Go"];
+  const goalPrompts = ["I want to learn web development", "I want to learn mobile development", "I want to learn data science", "I want to learn game development"];
 
   const bannedWords = ["spam", "hack", "virus", "malware", "inappropriate"];
 
+  // Voice input functionality
+  const startVoiceInput = () => {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      alert('Voice input is not supported in your browser. Please try Chrome or Edge.');
+      return;
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    recognition.onstart = () => {
+      setIsListening(true);
+    };
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      setInput(transcript);
+      setIsListening(false);
+    };
+
+    recognition.onerror = () => {
+      setIsListening(false);
+      alert('Voice input failed. Please try again.');
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    recognition.start();
+  };
+
+  // Export chat functionality
+  const exportChatAsTxt = () => {
+    const chatContent = messages.map(msg => {
+      const sender = msg.sender === 'user' ? (userName || 'User') : 'DevDen Assistant';
+      const timestamp = new Date(msg.id).toLocaleString();
+      return `[${timestamp}] ${sender}: ${msg.text}`;
+    }).join('\n\n');
+
+    const blob = new Blob([chatContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `devden-chat-${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const exportChatAsPdf = () => {
+    // Create HTML content for PDF
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>DevDen Chat Export</title>
+        <style>
+          body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            line-height: 1.6; 
+            background: white;
+          }
+          .header { 
+            text-align: center; 
+            margin-bottom: 30px; 
+            border-bottom: 3px solid #2563eb; 
+            padding-bottom: 15px; 
+          }
+          .header h1 { 
+            color: #2563eb; 
+            margin: 0 0 10px 0; 
+            font-size: 28px;
+          }
+          .message { 
+            margin-bottom: 20px; 
+            padding: 15px; 
+            border-radius: 12px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            page-break-inside: avoid;
+          }
+          .user-message { 
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); 
+            margin-left: 15%; 
+            border-left: 4px solid #2196f3;
+          }
+          .bot-message { 
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); 
+            margin-right: 15%; 
+            border-left: 4px solid #6c757d;
+          }
+          .sender { 
+            font-weight: bold; 
+            margin-bottom: 5px; 
+            color: #333;
+            font-size: 14px;
+          }
+          .timestamp { 
+            font-size: 11px; 
+            color: #666; 
+            margin-bottom: 8px;
+          }
+          .content { 
+            color: #333;
+            white-space: pre-wrap;
+          }
+          .footer {
+            margin-top: 40px; 
+            text-align: center; 
+            font-size: 12px; 
+            color: #666;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+          }
+          @media print {
+            body { margin: 0; }
+            .message { break-inside: avoid; }
+          }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <h1>DevDen Assistant Chat Export</h1>
+          <p style="margin: 5px 0; color: #666;">Exported on: ${new Date().toLocaleString()}</p>
+          ${userName ? `<p style="margin: 5px 0; color: #666;">User: ${userName}</p>` : ''}
+        </div>
+        ${messages.map(msg => {
+          const sender = msg.sender === 'user' ? (userName || 'User') : 'DevDen Assistant';
+          const timestamp = new Date(msg.id).toLocaleString();
+          const messageClass = msg.sender === 'user' ? 'user-message' : 'bot-message';
+          
+          // Clean up the message text (remove HTML tags for PDF)
+          const cleanText = msg.text
+            .replace(/<[^>]*>/g, '') // Remove HTML tags
+            .replace(/&nbsp;/g, ' ') // Replace &nbsp; with spaces
+            .trim();
+          
+          return `
+            <div class="message ${messageClass}">
+              <div class="sender">${sender}</div>
+              <div class="timestamp">${timestamp}</div>
+              <div class="content">${cleanText}</div>
+            </div>
+          `;
+        }).join('')}
+        <div class="footer">
+          Generated by DevDen Assistant<br>
+          Powered by brelinx.com
+        </div>
+      </body>
+      </html>
+    `;
+
+    // Create a new window for printing to PDF
+    const printWindow = window.open('', '_blank', 'width=800,height=600');
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+    
+    // Wait for content to load, then trigger print dialog
+    printWindow.onload = () => {
+      setTimeout(() => {
+        printWindow.print();
+      }, 500);
+    };
+  };
+
+  // Learning goals detection
+  const detectLearningGoals = (text) => {
+    const goals = {
+      'web development': ['html', 'css', 'javascript', 'react', 'nodejs'],
+      'mobile development': ['swift', 'kotlin', 'dart', 'react'],
+      'data science': ['python', 'r', 'sql', 'scala'],
+      'game development': ['c++', 'c#', 'lua'],
+      'backend development': ['java', 'python', 'nodejs', 'go', 'rust'],
+      'ai': ['python', 'r', 'scala'],
+      'machine learning': ['python', 'r', 'scala'],
+      'systems programming': ['c', 'c++', 'rust', 'assembly']
+    };
+
+    for (const [goal, languages] of Object.entries(goals)) {
+      if (text.toLowerCase().includes(goal)) {
+        return { goal, languages };
+      }
+    }
+    return null;
+  };
+
   const getBotReply = (text) => {
     const normalized = text.trim().toLowerCase();
-    const creatorKeywords = ["creator", "boss", "maker", "made you", "owner", "who built you"];
+    const creatorKeywords = ["creator", "boss", "maker", "made you", "owner", "who built you", "who created you", "founder", "ceo"];
     const greetingKeywords = ["hi", "hey", "hello", "wassup", "what's up", "whatsup", "what's good", "howzit", "sup", "yo", "good morning", "good afternoon", "good evening"];
+    const timeKeywords = ["time", "what time", "current time"];
+    const dateKeywords = ["date", "what date", "today", "current date"];
+
+    // Update last activity
+    setLastActivity(Date.now());
 
     // Handle name collection if we're awaiting a name
     if (awaitingName) {
@@ -369,23 +629,54 @@ function App() {
       if (name && name.length > 0 && !greetingKeywords.includes(normalized) && !creatorKeywords.some(k => normalized.includes(k))) {
         setUserName(name);
         setAwaitingName(false);
-        return `Nice to meet you, ${name}! 😊 I'm your DevDen Assistant. I can help you learn about programming languages and their career prospects. Just type a language keyword like HTML, Python, JavaScript, or any other programming language to get started!\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+        return `Nice to meet you, ${name}! <SmileIcon /> I'm your DevDen Assistant. I can help you learn about programming languages and their career prospects. Just type a language keyword like HTML, Python, JavaScript, or any other programming language to get started!\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
       }
+    }
+
+    // Check for learning goals
+    const goalDetection = detectLearningGoals(text);
+    if (goalDetection) {
+      const { goal, languages } = goalDetection;
+      const languageList = languages.map(lang => lang.charAt(0).toUpperCase() + lang.slice(1)).join(', ');
+      return `Great choice! For ${goal}, I recommend learning these languages: ${languageList} <TargetIcon />\n\nStart with the first one and type its name to learn more about it!\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+    }
+
+    // Check for time queries
+    if (timeKeywords.some(keyword => normalized.includes(keyword))) {
+      const currentTime = new Date().toLocaleTimeString('en-ZA', { 
+        timeZone: 'Africa/Johannesburg',
+        hour12: true,
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      return `The current time in South Africa is ${currentTime} <ClockIcon />\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+    }
+
+    // Check for date queries
+    if (dateKeywords.some(keyword => normalized.includes(keyword))) {
+      const currentDate = new Date().toLocaleDateString('en-ZA', { 
+        timeZone: 'Africa/Johannesburg',
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      return `Today is ${currentDate} <CalendarIcon />\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
     }
 
     // Check for greetings
     if (greetingKeywords.some(keyword => normalized.includes(keyword))) {
       if (userName) {
-        return `Hey there, ${userName}! 👋 Great to see you again! What programming language would you like to learn about today?\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+        return `Hey there, ${userName}! <WaveIcon /> Great to see you again! What programming language would you like to learn about today?\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
       } else {
         setAwaitingName(true);
-        return `Hey there! 👋 Welcome to DevDen Assistant! I'm here to help you learn about programming languages and career opportunities. What's your name?\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+        return `Hey there! <WaveIcon /> Welcome to DevDen Assistant! I'm here to help you learn about programming languages and career opportunities. What's your name?\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
       }
     }
 
     // Creator check
     if (creatorKeywords.some((k) => normalized.includes(k))) {
-      return "I'm created by Uwami Mgxekwa (https://brelinx.com).\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>";
+      return "I'm created by Uwami Mgxekwa, the CEO and founder of brelinx.com <UserIcon />. He's passionate about technology and helping people learn programming!\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>";
     }
 
     // Exact keyword match only
@@ -453,9 +744,52 @@ function App() {
           </div>
         );
       }
+      
+      // Process text content to replace icon placeholders with actual icons
+      let content = block.content.trim();
+      const iconMap = {
+        '<WaveIcon />': <WaveIcon key="wave" />,
+        '<ClockIcon />': <ClockIcon key="clock" />,
+        '<CalendarIcon />': <CalendarIcon key="calendar" />,
+        '<TargetIcon />': <TargetIcon key="target" />,
+        '<UserIcon />': <UserIcon key="user" />,
+        '<SmileIcon />': <SmileIcon key="smile" />
+      };
+
+      // Split content by icon placeholders and create elements
+      const parts = [];
+      let remainingContent = content;
+      
+      Object.entries(iconMap).forEach(([placeholder, icon]) => {
+        if (remainingContent.includes(placeholder)) {
+          const splitContent = remainingContent.split(placeholder);
+          const newParts = [];
+          splitContent.forEach((part, index) => {
+            if (index > 0) newParts.push(icon);
+            if (part) newParts.push(part);
+          });
+          remainingContent = newParts;
+        }
+      });
+
+      // If no icons were found, render as HTML
+      if (typeof remainingContent === 'string') {
+        return (
+          <div key={`${msg.id || idx}-text-${idx}`} className="leading-relaxed whitespace-pre-line">
+            <div dangerouslySetInnerHTML={{ __html: content }} />
+          </div>
+        );
+      }
+
+      // Render with icons
       return (
-        <div key={`${msg.id || idx}-text-${idx}`} className="leading-relaxed whitespace-pre-line">
-          <div dangerouslySetInnerHTML={{ __html: block.content.trim() }} />
+        <div key={`${msg.id || idx}-text-${idx}`} className="leading-relaxed whitespace-pre-line flex items-center gap-1 flex-wrap">
+          {Array.isArray(remainingContent) ? remainingContent.map((part, partIdx) => {
+            if (typeof part === 'string') {
+              return <span key={partIdx} dangerouslySetInnerHTML={{ __html: part }} />;
+            }
+            return part; // This is an icon component
+          }) : <span dangerouslySetInnerHTML={{ __html: remainingContent }} />}
         </div>
       );
     });
@@ -528,6 +862,8 @@ function App() {
         setFontSize(parsed.fontSize ?? "base");
         setReduceMotion(parsed.reduceMotion ?? false);
         setUserName(parsed.userName ?? "");
+        setLearningGoals(parsed.learningGoals ?? []);
+        setLastActivity(parsed.lastActivity ?? Date.now());
       } catch (err) {
         console.error("Failed to load saved chat", err);
       }
@@ -538,9 +874,49 @@ function App() {
   useEffect(() => {
     localStorage.setItem(
       "devden-chat",
-      JSON.stringify({ messages, theme, fontSize, reduceMotion, userName })
+      JSON.stringify({ messages, theme, fontSize, reduceMotion, userName, learningGoals, lastActivity })
     );
-  }, [messages, theme, fontSize, reduceMotion, userName]);
+  }, [messages, theme, fontSize, reduceMotion, userName, learningGoals, lastActivity]);
+
+  // Notification system for inactive users
+  useEffect(() => {
+    const checkInactivity = () => {
+      const now = Date.now();
+      const timeSinceLastActivity = now - lastActivity;
+      const oneHour = 60 * 60 * 1000; // 1 hour in milliseconds
+
+      if (timeSinceLastActivity > oneHour && userName && messages.length > 0) {
+        // Show notification if browser supports it
+        if ('Notification' in window && Notification.permission === 'granted') {
+          new Notification('DevDen Assistant', {
+            body: `Hey ${userName}! Haven't learned about a new language in a while. Come back and explore more!`,
+            icon: '/favicon.ico'
+          });
+        }
+      }
+    };
+
+    // Request notification permission on first load
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+
+    // Check inactivity every 30 minutes
+    const interval = setInterval(checkInactivity, 30 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [lastActivity, userName, messages]);
+
+  // Close export menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showExportMenu && !event.target.closest('.export-menu-container')) {
+        setShowExportMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showExportMenu]);
 
   useEffect(() => {
     const sizeValue = fontSize === "small" ? "14px" : fontSize === "large" ? "18px" : "16px";
@@ -593,6 +969,41 @@ function App() {
             >
               <span>← Back to DevDen</span>
             </a>
+            {messages.length > 0 && (
+              <div className="relative export-menu-container">
+                <button
+                  onClick={() => setShowExportMenu(!showExportMenu)}
+                  className="inline-flex items-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm font-medium hover:border-[color:var(--accent-soft)] transition"
+                >
+                  <DocumentIcon /> Export Chat
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 10l5 5 5-5z"/>
+                  </svg>
+                </button>
+                {showExportMenu && (
+                  <div className="absolute top-full mt-2 right-0 bg-[var(--panel-bg)] border border-[color:var(--panel-border)] rounded-2xl shadow-lg z-50 min-w-[160px]">
+                    <button
+                      onClick={() => {
+                        exportChatAsPdf();
+                        setShowExportMenu(false);
+                      }}
+                      className="w-full text-left px-4 py-3 text-sm hover:bg-[var(--chip-bg)] rounded-t-2xl transition"
+                    >
+                      Export as PDF
+                    </button>
+                    <button
+                      onClick={() => {
+                        exportChatAsTxt();
+                        setShowExportMenu(false);
+                      }}
+                      className="w-full text-left px-4 py-3 text-sm hover:bg-[var(--chip-bg)] rounded-b-2xl transition border-t border-[color:var(--panel-border)]"
+                    >
+                      Export as TXT
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
             <button
               onClick={toggleTheme}
               className="inline-flex items-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm font-medium hover:border-[color:var(--accent-soft)] transition"
@@ -662,19 +1073,33 @@ function App() {
 
         <div className="p-4 sm:p-5 border-t border-[color:var(--panel-border)] bg-[var(--panel-footer)] backdrop-blur">
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch sm:items-center">
-            <input
-              className="flex-1 bg-[var(--input-bg)] border border-[color:var(--input-border)] rounded-2xl px-4 py-3 text-sm text-[var(--text-primary)] placeholder:text-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent transition"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder={
-                awaitingName 
-                  ? "What's your name?" 
-                  : userName 
-                    ? `Hi ${userName}! Enter a language keyword (e.g., HTML, Python, Java)...`
-                    : "Say hi to get started, or enter a language keyword (e.g., HTML, Python, Java)..."
-              }
-            />
+            <div className="flex-1 flex gap-2">
+              <input
+                className="flex-1 bg-[var(--input-bg)] border border-[color:var(--input-border)] rounded-2xl px-4 py-3 text-sm text-[var(--text-primary)] placeholder:text-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent transition"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder={
+                  awaitingName 
+                    ? "What's your name?" 
+                    : userName 
+                      ? `Hi ${userName}! Enter a language keyword (e.g., HTML, Python, Java)...`
+                      : "Say hi to get started, or enter a language keyword (e.g., HTML, Python, Java)..."
+                }
+              />
+              <button
+                onClick={startVoiceInput}
+                disabled={isListening}
+                className={`px-3 py-3 rounded-2xl border transition ${
+                  isListening 
+                    ? 'border-red-500 bg-red-50 text-red-600' 
+                    : 'border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-[var(--text-primary)] hover:border-[color:var(--accent-soft)]'
+                }`}
+                title="Voice input"
+              >
+                {isListening ? <RecordIcon /> : <MicIcon />}
+              </button>
+            </div>
             <button
               onClick={handleSend}
               className="inline-flex items-center justify-center gap-2 bg-[var(--accent)] text-white px-4 py-3 rounded-2xl font-medium shadow-[0_8px_30px_var(--accent-shadow)] hover:bg-[var(--accent-strong)] active:translate-y-[1px] transition w-full sm:w-auto"
@@ -689,6 +1114,17 @@ function App() {
                 key={prompt}
                 onClick={() => setInput(prompt)}
                 className="px-3 py-2 rounded-full border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-xs text-[var(--muted-strong)] hover:border-[color:var(--accent-soft)]"
+              >
+                {prompt}
+              </button>
+            ))}
+          </div>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {goalPrompts.map((prompt) => (
+              <button
+                key={prompt}
+                onClick={() => setInput(prompt)}
+                className="px-3 py-2 rounded-full border border-[color:var(--accent-soft)] bg-[var(--accent-glow)] text-xs text-[var(--accent)] hover:bg-[var(--accent-soft)] hover:text-white"
               >
                 {prompt}
               </button>

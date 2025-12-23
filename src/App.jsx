@@ -94,6 +94,17 @@ function App() {
               <span className="text-lg leading-none">↗</span>
             </button>
           </div>
+          <div className="mt-3 flex items-center justify-center text-xs font-medium text-[var(--muted-strong)] gap-1">
+            <span>Powered by</span>
+            <a
+              href="https://brelinx.com"
+              target="_blank"
+              rel="noreferrer"
+              className="text-[var(--accent)] hover:text-[var(--accent-strong)] underline underline-offset-4"
+            >
+              brelinx.com
+            </a>
+          </div>
         </div>
       </div>
     </div>

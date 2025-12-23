@@ -3,13 +3,78 @@
 :root {
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   color: #0f172a;
-  background: #f8fafc;
   min-height: 100%;
+
+  --page-bg: radial-gradient(circle at 20% 20%, #ecfeff 0, transparent 26%),
+    radial-gradient(circle at 80% 0%, #dcfce7 0, transparent 22%),
+    #f8fafc;
+  --panel-bg: rgba(255, 255, 255, 0.86);
+  --panel-header: rgba(255, 255, 255, 0.92);
+  --panel-body: transparent;
+  --panel-footer: rgba(255, 255, 255, 0.9);
+  --panel-border: rgba(0, 0, 0, 0.07);
+  --panel-shadow: 0 15px 60px rgba(0, 0, 0, 0.12);
+
+  --text-primary: #0f172a;
+  --muted: #6b7280;
+  --muted-strong: #475569;
+
+  --chip-bg: rgba(15, 23, 42, 0.04);
+  --input-bg: #f8fafc;
+  --input-border: rgba(0, 0, 0, 0.08);
+
+  --user-bubble-bg: #0b0f19;
+  --user-bubble-text: #f8fafc;
+  --user-bubble-border: rgba(16, 185, 129, 0.45);
+
+  --bot-bubble-bg: #ffffff;
+  --bot-bubble-text: #0f172a;
+  --bot-bubble-border: rgba(0, 0, 0, 0.08);
+
+  --accent: #10b981;
+  --accent-strong: #0f9f70;
+  --accent-soft: rgba(16, 185, 129, 0.25);
+  --accent-shadow: rgba(16, 185, 129, 0.35);
+  --accent-glow: rgba(16, 185, 129, 0.18);
+}
+
+[data-theme="dark"] {
+  color: #e2e8f0;
+  --page-bg: radial-gradient(circle at 20% 10%, #0f172a 0, transparent 26%),
+    radial-gradient(circle at 90% 10%, #0b3b2c 0, transparent 20%),
+    #0b1220;
+  --panel-bg: rgba(14, 22, 36, 0.92);
+  --panel-header: rgba(16, 24, 38, 0.96);
+  --panel-body: transparent;
+  --panel-footer: rgba(14, 22, 36, 0.92);
+  --panel-border: rgba(255, 255, 255, 0.06);
+  --panel-shadow: 0 20px 70px rgba(0, 0, 0, 0.45);
+
+  --text-primary: #e2e8f0;
+  --muted: #94a3b8;
+  --muted-strong: #cbd5e1;
+
+  --chip-bg: rgba(255, 255, 255, 0.04);
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.08);
+
+  --user-bubble-bg: linear-gradient(135deg, #0f172a, #0b3b2c);
+  --user-bubble-text: #e2e8f0;
+  --user-bubble-border: rgba(16, 185, 129, 0.55);
+
+  --bot-bubble-bg: rgba(255, 255, 255, 0.04);
+  --bot-bubble-text: #e2e8f0;
+  --bot-bubble-border: rgba(255, 255, 255, 0.08);
+
+  --accent: #22c55e;
+  --accent-strong: #16a34a;
+  --accent-soft: rgba(34, 197, 94, 0.28);
+  --accent-shadow: rgba(34, 197, 94, 0.4);
+  --accent-glow: rgba(34, 197, 94, 0.22);
 }
 
 body {
   margin: 0;
-  background: radial-gradient(circle at 20% 20%, #ecfeff 0, transparent 25%),
-    radial-gradient(circle at 80% 0%, #dcfce7 0, transparent 20%),
-    #f8fafc;
+  background: var(--page-bg);
+  transition: background 0.4s ease;
 }

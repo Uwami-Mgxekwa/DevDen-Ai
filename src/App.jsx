@@ -7,6 +7,8 @@ function App() {
   const [fontSize, setFontSize] = useState("base");
   const [reduceMotion, setReduceMotion] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [awaitingName, setAwaitingName] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const isDark = theme === "dark";
   const messagesEndRef = useRef(null);
@@ -359,6 +361,27 @@ function App() {
   const getBotReply = (text) => {
     const normalized = text.trim().toLowerCase();
     const creatorKeywords = ["creator", "boss", "maker", "made you", "owner", "who built you"];
+    const greetingKeywords = ["hi", "hey", "hello", "wassup", "what's up", "whatsup", "what's good", "howzit", "sup", "yo", "good morning", "good afternoon", "good evening"];
+
+    // Handle name collection if we're awaiting a name
+    if (awaitingName) {
+      const name = text.trim();
+      if (name && name.length > 0 && !greetingKeywords.includes(normalized) && !creatorKeywords.some(k => normalized.includes(k))) {
+        setUserName(name);
+        setAwaitingName(false);
+        return `Nice to meet you, ${name}! 😊 I'm your DevDen Assistant. I can help you learn about programming languages and their career prospects. Just type a language keyword like HTML, Python, JavaScript, or any other programming language to get started!\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+      }
+    }
+
+    // Check for greetings
+    if (greetingKeywords.some(keyword => normalized.includes(keyword))) {
+      if (userName) {
+        return `Hey there, ${userName}! 👋 Great to see you again! What programming language would you like to learn about today?\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+      } else {
+        setAwaitingName(true);
+        return `Hey there! 👋 Welcome to DevDen Assistant! I'm here to help you learn about programming languages and career opportunities. What's your name?\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+      }
+    }
 
     // Creator check
     if (creatorKeywords.some((k) => normalized.includes(k))) {
@@ -504,6 +527,7 @@ function App() {
         setTheme(parsed.theme ?? "light");
         setFontSize(parsed.fontSize ?? "base");
         setReduceMotion(parsed.reduceMotion ?? false);
+        setUserName(parsed.userName ?? "");
       } catch (err) {
         console.error("Failed to load saved chat", err);
       }
@@ -514,9 +538,9 @@ function App() {
   useEffect(() => {
     localStorage.setItem(
       "devden-chat",
-      JSON.stringify({ messages, theme, fontSize, reduceMotion })
+      JSON.stringify({ messages, theme, fontSize, reduceMotion, userName })
     );
-  }, [messages, theme, fontSize, reduceMotion]);
+  }, [messages, theme, fontSize, reduceMotion, userName]);
 
   useEffect(() => {
     const sizeValue = fontSize === "small" ? "14px" : fontSize === "large" ? "18px" : "16px";
@@ -543,7 +567,11 @@ function App() {
   };
 
   const toggleSettings = () => setShowSettings((s) => !s);
-  const clearChat = () => setMessages([]);
+  const clearChat = () => {
+    setMessages([]);
+    setUserName("");
+    setAwaitingName(false);
+  };
 
   return (
     <div
@@ -597,9 +625,14 @@ function App() {
               <div className="h-12 w-12 rounded-2xl bg-[var(--text-primary)] text-[var(--panel-bg)] flex items-center justify-center text-lg font-semibold shadow-lg mb-3">
                 AI
               </div>
-              <p className="font-medium text-[var(--text-primary)]">Enter a programming language keyword</p>
+              <p className="font-medium text-[var(--text-primary)]">
+                {userName ? `Welcome back, ${userName}!` : "Welcome to DevDen Assistant!"}
+              </p>
               <p className="text-sm text-[var(--muted)]">
-                Try: HTML, CSS, JavaScript, Python, Java, React, SQL, and more!
+                {userName 
+                  ? "What programming language would you like to learn about today?" 
+                  : "Say hi to get started, or try: HTML, CSS, JavaScript, Python, Java, React, SQL, and more!"
+                }
               </p>
             </div>
           ) : (
@@ -634,7 +667,13 @@ function App() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Enter a language keyword (e.g., HTML, Python, Java)..."
+              placeholder={
+                awaitingName 
+                  ? "What's your name?" 
+                  : userName 
+                    ? `Hi ${userName}! Enter a language keyword (e.g., HTML, Python, Java)...`
+                    : "Say hi to get started, or enter a language keyword (e.g., HTML, Python, Java)..."
+              }
             />
             <button
               onClick={handleSend}

@@ -25,6 +25,10 @@ function App() {
       return "Hi there! What can I help you build today?";
     }
 
+    if (normalized.includes("oop") || normalized.includes("object oriented")) {
+      return "OOP (object-oriented programming) organizes code into objects with data (state) and behavior (methods), using principles like encapsulation, inheritance, polymorphism, and abstraction.";
+    }
+
     if (normalized.includes("html")) {
       return "Need HTML help? I can outline structure, semantics, or responsive patterns.";
     }
@@ -37,7 +41,7 @@ function App() {
       return "JavaScript help? Ask about async, DOM, React patterns, or debugging.";
     }
 
-    return `Got it: "${text}". Tell me more details so I can help.`;
+    return `Got it: "${text}". Share a bit more detail or an example so I can help.`;
   };
 
   const handleSend = () => {

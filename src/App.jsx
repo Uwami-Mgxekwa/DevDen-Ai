@@ -25,329 +25,329 @@ function App() {
       name: "HTML",
       description: "HyperText Markup Language is the standard markup language for creating web pages.",
       purpose: "HTML structures content on the web—headings, paragraphs, links, images, forms, and more. It's the skeleton of every website.",
-      jobProspects: "High demand! Every web developer needs HTML. Entry-level positions start around $45k-$60k, with senior roles reaching $100k+. Essential for frontend, full-stack, and even backend developers who work with web APIs.",
+      jobProspects: "High demand! Every web developer needs HTML. Entry-level positions start around R37k-R50k per month, with senior roles reaching R83k+ per month. Essential for frontend, full-stack, and even backend developers who work with web APIs.",
       realLifeApplications: "Used in every website you visit—from simple blogs to complex web apps like Facebook, Google, and Amazon. Also used in email templates, documentation sites, and mobile app development frameworks.",
     },
     css: {
       name: "CSS",
       description: "Cascading Style Sheets is used to style and layout web pages.",
       purpose: "CSS controls the visual appearance of HTML elements—colors, fonts, spacing, layouts, animations, and responsive design.",
-      jobProspects: "Excellent prospects! Combined with HTML/JavaScript, CSS skills are essential. Frontend developers earn $60k-$120k+. Specialized CSS experts (animations, responsive design) are highly sought after.",
+      jobProspects: "Excellent prospects! Combined with HTML/JavaScript, CSS skills are essential. Frontend developers earn R50k-R100k+ per month. Specialized CSS experts (animations, responsive design) are highly sought after.",
       realLifeApplications: "Every website uses CSS for styling. Modern CSS powers animations on sites like Apple.com, responsive layouts on mobile apps, and design systems used by companies like Airbnb and Stripe.",
     },
     javascript: {
       name: "JavaScript",
       description: "A versatile programming language that runs in browsers and on servers (Node.js).",
       purpose: "JavaScript makes websites interactive—handling user clicks, form submissions, API calls, and dynamic content updates. Also powers server-side applications with Node.js.",
-      jobProspects: "Extremely high demand! JavaScript developers are among the most sought-after. Salaries range from $70k (junior) to $150k+ (senior). React, Vue, and Node.js skills significantly boost earning potential.",
+      jobProspects: "Extremely high demand! JavaScript developers are among the most sought-after. Salaries range from R58k (junior) to R125k+ (senior) per month. React, Vue, and Node.js skills significantly boost earning potential.",
       realLifeApplications: "Used everywhere—Netflix, LinkedIn, PayPal, Uber (frontend), and many backend services. Powers interactive features on social media, e-commerce sites, and real-time applications like chat apps and gaming platforms.",
     },
     js: {
       name: "JavaScript",
       description: "A versatile programming language that runs in browsers and on servers (Node.js).",
       purpose: "JavaScript makes websites interactive—handling user clicks, form submissions, API calls, and dynamic content updates. Also powers server-side applications with Node.js.",
-      jobProspects: "Extremely high demand! JavaScript developers are among the most sought-after. Salaries range from $70k (junior) to $150k+ (senior). React, Vue, and Node.js skills significantly boost earning potential.",
+      jobProspects: "Extremely high demand! JavaScript developers are among the most sought-after. Salaries range from R58k (junior) to R125k+ (senior) per month. React, Vue, and Node.js skills significantly boost earning potential.",
       realLifeApplications: "Used everywhere—Netflix, LinkedIn, PayPal, Uber (frontend), and many backend services. Powers interactive features on social media, e-commerce sites, and real-time applications like chat apps and gaming platforms.",
     },
     python: {
       name: "Python",
       description: "A high-level, interpreted programming language known for its simplicity and readability.",
       purpose: "Python is used for web development, data science, AI/ML, automation, scripting, and backend APIs. Its clean syntax makes it beginner-friendly yet powerful.",
-      jobProspects: "Exceptional demand! Python developers earn $75k-$140k+. Data scientists and ML engineers using Python can earn $100k-$200k+. One of the fastest-growing languages in the job market.",
+      jobProspects: "Exceptional demand! Python developers earn R62k-R117k+ per month. Data scientists and ML engineers using Python can earn R83k-R167k+ per month. One of the fastest-growing languages in the job market.",
       realLifeApplications: "Powering Instagram's backend, YouTube's recommendation system, Google's search algorithms, NASA's data analysis, and countless AI/ML models. Used in finance, healthcare, automation, and scientific research.",
     },
     java: {
       name: "Java",
       description: "A robust, object-oriented programming language designed for cross-platform applications.",
       purpose: "Java is used for enterprise applications, Android app development, large-scale systems, banking software, and server-side applications. Known for 'write once, run anywhere' portability.",
-      jobProspects: "Strong demand, especially in enterprise and Android development. Salaries range from $70k-$130k+. Java remains a staple in large corporations and financial institutions.",
+      jobProspects: "Strong demand, especially in enterprise and Android development. Salaries range from R58k-R108k+ per month. Java remains a staple in large corporations and financial institutions.",
       realLifeApplications: "Android apps (most apps on Google Play), enterprise systems at banks and insurance companies, e-commerce platforms like Amazon's backend, and large-scale web applications.",
     },
     "c++": {
       name: "C++",
       description: "A powerful, high-performance programming language used for system programming and resource-intensive applications.",
       purpose: "C++ is used for game engines, operating systems, embedded systems, high-frequency trading, graphics software, and applications requiring maximum performance.",
-      jobProspects: "High demand in specialized fields! Game developers, systems programmers, and embedded engineers earn $80k-$150k+. Less common than web languages but highly valued in specific industries.",
+      jobProspects: "High demand in specialized fields! Game developers, systems programmers, and embedded engineers earn R67k-R125k+ per month. Less common than web languages but highly valued in specific industries.",
       realLifeApplications: "Game engines (Unreal Engine, many AAA games), operating systems (Windows, Linux components), browsers (Chrome, Firefox), and performance-critical applications in finance and aerospace.",
     },
     "c#": {
       name: "C#",
       description: "A modern, object-oriented language developed by Microsoft, part of the .NET ecosystem.",
       purpose: "C# is used for Windows applications, game development (Unity), web APIs, enterprise software, and cross-platform mobile apps with Xamarin.",
-      jobProspects: "Strong demand, especially in enterprise and game development. Salaries range from $70k-$130k+. Unity game developers are particularly sought after.",
+      jobProspects: "Strong demand, especially in enterprise and game development. Salaries range from R58k-R108k+ per month. Unity game developers are particularly sought after.",
       realLifeApplications: "Windows desktop applications, Unity games (Pokémon GO, many mobile games), enterprise software, and web services built on .NET. Used by companies like Microsoft, Stack Overflow, and many game studios.",
     },
     sql: {
       name: "SQL",
       description: "Structured Query Language is the standard language for managing and querying relational databases.",
       purpose: "SQL is used to create, read, update, and delete data in databases. Essential for data analysis, backend development, and database administration.",
-      jobProspects: "Excellent prospects! Database administrators and data analysts earn $65k-$120k+. SQL is a must-have skill for backend developers and data scientists.",
+      jobProspects: "Excellent prospects! Database administrators and data analysts earn R54k-R100k+ per month. SQL is a must-have skill for backend developers and data scientists.",
       realLifeApplications: "Used by every major company to manage data—Amazon's product database, banks' transaction records, social media user data, and analytics platforms. Critical for data-driven decision making.",
     },
     react: {
       name: "React",
       description: "A popular JavaScript library for building user interfaces, developed by Facebook.",
       purpose: "React creates reusable UI components and manages application state. Used for building single-page applications, mobile apps (React Native), and interactive web interfaces.",
-      jobProspects: "Very high demand! React developers are among the most sought-after frontend roles. Salaries range from $75k-$140k+. React Native adds mobile development opportunities.",
+      jobProspects: "Very high demand! React developers are among the most sought-after frontend roles. Salaries range from R62k-R117k+ per month. React Native adds mobile development opportunities.",
       realLifeApplications: "Used by Facebook, Instagram, Netflix, Airbnb, WhatsApp Web, and thousands of companies. Powers modern web applications and mobile apps through React Native.",
     },
     nodejs: {
       name: "Node.js",
       description: "A JavaScript runtime built on Chrome's V8 engine, allowing JavaScript to run on servers.",
       purpose: "Node.js enables server-side JavaScript development, building APIs, real-time applications, microservices, and full-stack JavaScript applications.",
-      jobProspects: "High demand! Full-stack JavaScript developers (Node.js + React) are highly valued. Salaries range from $80k-$150k+. Essential for modern web development.",
+      jobProspects: "High demand! Full-stack JavaScript developers (Node.js + React) are highly valued. Salaries range from R67k-R125k+ per month. Essential for modern web development.",
       realLifeApplications: "Used by Netflix, LinkedIn, Uber, PayPal, and many startups. Powers real-time chat applications, streaming services, API backends, and serverless functions.",
     },
     php: {
       name: "PHP",
       description: "A server-side scripting language designed for web development.",
       purpose: "PHP is used to build dynamic websites, content management systems (like WordPress), e-commerce platforms, and server-side web applications.",
-      jobProspects: "Steady demand, especially for WordPress and legacy systems. Salaries range from $60k-$110k+. Many established companies still use PHP.",
+      jobProspects: "Steady demand, especially for WordPress and legacy systems. Salaries range from R50k-R92k+ per month. Many established companies still use PHP.",
       realLifeApplications: "WordPress (powers 40%+ of websites), Facebook (originally built on PHP), Wikipedia, and many e-commerce platforms. Still widely used despite newer alternatives.",
     },
     ruby: {
       name: "Ruby",
       description: "A dynamic, object-oriented programming language known for its elegant syntax.",
       purpose: "Ruby is primarily used with Ruby on Rails framework for rapid web application development, building MVPs, and startup backends.",
-      jobProspects: "Moderate demand, concentrated in startups and Rails-focused companies. Salaries range from $70k-$120k+. Smaller community but loyal following.",
+      jobProspects: "Moderate demand, concentrated in startups and Rails-focused companies. Salaries range from R58k-R100k+ per month. Smaller community but loyal following.",
       realLifeApplications: "Used by GitHub, Shopify, Airbnb (originally), Basecamp, and many startups. Rails enables rapid prototyping and building full-featured web applications quickly.",
     },
     go: {
       name: "Go (Golang)",
       description: "A statically typed language developed by Google, designed for simplicity and performance.",
       purpose: "Go is used for cloud services, microservices, distributed systems, DevOps tools, and high-performance backend services.",
-      jobProspects: "Growing demand! Go developers are increasingly sought after, especially in cloud and infrastructure roles. Salaries range from $90k-$150k+.",
+      jobProspects: "Growing demand! Go developers are increasingly sought after, especially in cloud and infrastructure roles. Salaries range from R75k-R125k+ per month.",
       realLifeApplications: "Used by Google (Kubernetes, Docker), Uber, Dropbox, Twitch, and many cloud-native applications. Popular for building scalable backend services and DevOps tools.",
     },
     rust: {
       name: "Rust",
       description: "A systems programming language focused on safety, performance, and concurrency.",
       purpose: "Rust is used for system programming, web assembly, blockchain development, game engines, and applications requiring memory safety without garbage collection.",
-      jobProspects: "Emerging demand! Rust developers are niche but highly valued. Salaries range from $100k-$180k+. Growing rapidly in systems programming and blockchain.",
+      jobProspects: "Emerging demand! Rust developers are niche but highly valued. Salaries range from R83k-R150k+ per month. Growing rapidly in systems programming and blockchain.",
       realLifeApplications: "Used by Mozilla (Firefox components), Microsoft (Windows components), Dropbox, and blockchain projects. Growing adoption in game engines and WebAssembly applications.",
     },
     swift: {
       name: "Swift",
       description: "Apple's modern programming language for iOS, macOS, watchOS, and tvOS development.",
       purpose: "Swift is used to build native iOS and macOS applications, providing a safe, fast, and expressive language for Apple platforms.",
-      jobProspects: "High demand for iOS developers! Swift developers earn $80k-$150k+. Mobile app development is booming, especially in iOS.",
+      jobProspects: "High demand for iOS developers! Swift developers earn R67k-R125k+ per month. Mobile app development is booming, especially in iOS.",
       realLifeApplications: "Used to build all modern iOS apps—Instagram, Uber, Airbnb, and thousands of App Store applications. Essential for anyone developing for Apple devices.",
     },
     kotlin: {
       name: "Kotlin",
       description: "A modern, concise language that runs on the JVM, officially supported for Android development.",
       purpose: "Kotlin is primarily used for Android app development, though it can also be used for backend services and multiplatform projects.",
-      jobProspects: "Strong demand! Android developers using Kotlin are highly sought after. Salaries range from $75k-$140k+. Google's official support makes it essential for Android.",
+      jobProspects: "Strong demand! Android developers using Kotlin are highly sought after. Salaries range from R62k-R117k+ per month. Google's official support makes it essential for Android.",
       realLifeApplications: "Used by Pinterest, Trello, Evernote, and many Android apps. Google's preferred language for Android development, replacing Java in many new projects.",
     },
     c: {
       name: "C",
       description: "A foundational systems programming language that has influenced many modern languages.",
       purpose: "C is used for system programming, embedded systems, operating systems, compilers, and performance-critical applications where low-level control is needed.",
-      jobProspects: "Steady demand in systems programming and embedded development. Salaries range from $70k-$130k+. Essential for firmware, drivers, and system-level programming.",
+      jobProspects: "Steady demand in systems programming and embedded development. Salaries range from R58k-R108k+ per month. Essential for firmware, drivers, and system-level programming.",
       realLifeApplications: "Used in Linux kernel, embedded systems in cars and IoT devices, microcontrollers, and as the foundation for many other programming languages and systems.",
     },
     typescript: {
       name: "TypeScript",
       description: "A typed superset of JavaScript that compiles to plain JavaScript, developed by Microsoft.",
       purpose: "TypeScript adds static typing to JavaScript, making large codebases more maintainable and catching errors at compile time. Used for web apps, Node.js backends, and enterprise applications.",
-      jobProspects: "Very high demand! TypeScript developers are increasingly sought after. Salaries range from $80k-$150k+. Many companies are migrating from JavaScript to TypeScript.",
+      jobProspects: "Very high demand! TypeScript developers are increasingly sought after. Salaries range from R67k-R125k+ per month. Many companies are migrating from JavaScript to TypeScript.",
       realLifeApplications: "Used by Microsoft, Slack, Airbnb, and many enterprise applications. Powers large-scale web applications where type safety and maintainability are crucial.",
     },
     perl: {
       name: "Perl",
       description: "A high-level programming language known for its text processing capabilities and regular expressions.",
       purpose: "Perl excels at text processing, system administration, web development, bioinformatics, and quick scripting tasks. Known for its 'there's more than one way to do it' philosophy.",
-      jobProspects: "Moderate demand, mainly in legacy systems and specialized fields like bioinformatics. Salaries range from $70k-$120k+. Still valued for text processing and system administration.",
+      jobProspects: "Moderate demand, mainly in legacy systems and specialized fields like bioinformatics. Salaries range from R70k-R120k+. Still valued for text processing and system administration.",
       realLifeApplications: "Used in bioinformatics research, system administration scripts, legacy web applications, and text processing pipelines in various industries.",
     },
     scala: {
       name: "Scala",
       description: "A JVM language that combines functional and object-oriented programming paradigms.",
       purpose: "Scala is used for big data processing (Apache Spark), distributed systems, web backends, and applications requiring both functional and OOP approaches.",
-      jobProspects: "Good demand in big data and fintech. Salaries range from $90k-$160k+. Particularly valued in companies using Apache Spark and functional programming.",
+      jobProspects: "Good demand in big data and fintech. Salaries range from R90k-R160k+. Particularly valued in companies using Apache Spark and functional programming.",
       realLifeApplications: "Used by Twitter, LinkedIn, Netflix for big data processing, Apache Spark ecosystem, and financial systems requiring high performance and concurrency.",
     },
     r: {
       name: "R",
       description: "A programming language and environment specifically designed for statistical computing and data analysis.",
       purpose: "R is used for statistical analysis, data visualization, machine learning, bioinformatics, and academic research. Excellent for data science and statistical modeling.",
-      jobProspects: "Strong demand in data science and research. Data scientists using R earn $80k-$140k+. Particularly valued in academia, pharmaceuticals, and research institutions.",
+      jobProspects: "Strong demand in data science and research. Data scientists using R earn R67k-R117k+ per month. Particularly valued in academia, pharmaceuticals, and research institutions.",
       realLifeApplications: "Used by statisticians, data scientists, researchers in pharmaceuticals, finance, and academia. Powers statistical analysis in clinical trials and market research.",
     },
     matlab: {
       name: "MATLAB",
       description: "A programming platform designed for engineering and scientific computing with built-in mathematical functions.",
       purpose: "MATLAB is used for numerical computing, algorithm development, data analysis, visualization, and simulation in engineering and scientific fields.",
-      jobProspects: "Steady demand in engineering and research. Engineers using MATLAB earn $75k-$130k+. Essential in aerospace, automotive, and academic research.",
+      jobProspects: "Steady demand in engineering and research. Engineers using MATLAB earn R75k-R130k+. Essential in aerospace, automotive, and academic research.",
       realLifeApplications: "Used by NASA, automotive companies for simulation, signal processing in telecommunications, and research institutions for mathematical modeling and analysis.",
     },
     haskell: {
       name: "Haskell",
       description: "A purely functional programming language with strong static typing and lazy evaluation.",
       purpose: "Haskell is used for academic research, financial systems, compilers, and applications requiring mathematical precision and functional programming paradigms.",
-      jobProspects: "Niche but well-paid demand. Haskell developers earn $90k-$160k+. Valued in fintech, academia, and companies emphasizing functional programming.",
+      jobProspects: "Niche but well-paid demand. Haskell developers earn R90k-R160k+. Valued in fintech, academia, and companies emphasizing functional programming.",
       realLifeApplications: "Used in financial systems, blockchain projects, compilers, and academic research. Companies like Facebook use Haskell for spam detection systems.",
     },
     dart: {
       name: "Dart",
       description: "A programming language developed by Google, primarily used with the Flutter framework for mobile app development.",
       purpose: "Dart is mainly used with Flutter to build cross-platform mobile applications for iOS and Android from a single codebase.",
-      jobProspects: "Growing demand with Flutter's popularity! Dart/Flutter developers earn $70k-$130k+. Increasing adoption for cross-platform mobile development.",
+      jobProspects: "Growing demand with Flutter's popularity! Dart/Flutter developers earn R70k-R130k+. Increasing adoption for cross-platform mobile development.",
       realLifeApplications: "Used by Google Ads, Alibaba, BMW, and many mobile apps. Powers cross-platform mobile applications that run on both iOS and Android.",
     },
     elixir: {
       name: "Elixir",
       description: "A functional programming language built on the Erlang Virtual Machine, designed for scalable and fault-tolerant systems.",
       purpose: "Elixir is used for building distributed, concurrent, and fault-tolerant systems like web applications, IoT backends, and real-time communication systems.",
-      jobProspects: "Growing demand in startups and companies needing scalable systems. Elixir developers earn $80k-$140k+. Valued for building resilient, concurrent applications.",
+      jobProspects: "Growing demand in startups and companies needing scalable systems. Elixir developers earn R80k-R140k+. Valued for building resilient, concurrent applications.",
       realLifeApplications: "Used by Discord, Pinterest, Moz, and WhatsApp (Erlang). Powers real-time chat systems, IoT platforms, and high-concurrency web applications.",
     },
     "objective-c": {
       name: "Objective-C",
       description: "Apple's older programming language for iOS and macOS development, now largely superseded by Swift.",
       purpose: "Objective-C was used for iOS and macOS app development. Still maintained in legacy applications and some system-level programming on Apple platforms.",
-      jobProspects: "Declining demand as Swift takes over. Legacy Objective-C developers earn $70k-$120k+. Mainly needed for maintaining existing iOS/macOS applications.",
+      jobProspects: "Declining demand as Swift takes over. Legacy Objective-C developers earn R70k-R120k+. Mainly needed for maintaining existing iOS/macOS applications.",
       realLifeApplications: "Used in older iOS apps, macOS applications, and legacy codebases. Many established apps still have Objective-C components being gradually migrated to Swift.",
     },
     lua: {
       name: "Lua",
       description: "A lightweight, embeddable scripting language designed for extending applications.",
       purpose: "Lua is used for game scripting, embedded systems, web development (OpenResty), and as an extension language in various applications.",
-      jobProspects: "Moderate demand, mainly in gaming and embedded systems. Lua developers earn $60k-$110k+. Valued for game development and embedded scripting.",
+      jobProspects: "Moderate demand, mainly in gaming and embedded systems. Lua developers earn R60k-R110k+. Valued for game development and embedded scripting.",
       realLifeApplications: "Used in World of Warcraft addons, game engines, Redis scripting, network appliances, and as a scripting language in various software applications.",
     },
     fortran: {
       name: "Fortran",
       description: "One of the oldest programming languages, still widely used in scientific and high-performance computing.",
       purpose: "Fortran is used for numerical computing, scientific simulations, weather forecasting, and high-performance computing applications requiring mathematical precision.",
-      jobProspects: "Steady demand in scientific computing and HPC. Fortran developers earn $80k-$140k+. Essential in aerospace, weather modeling, and scientific research.",
+      jobProspects: "Steady demand in scientific computing and HPC. Fortran developers earn R80k-R140k+. Essential in aerospace, weather modeling, and scientific research.",
       realLifeApplications: "Used by NASA, weather services, climate modeling, nuclear simulations, and supercomputing applications. Still dominant in scientific computing.",
     },
     ada: {
       name: "Ada",
       description: "A structured programming language designed for safety-critical and defense systems.",
       purpose: "Ada is used in defense systems, aerospace, air traffic control, medical devices, and other safety-critical applications requiring high reliability.",
-      jobProspects: "Specialized demand in defense and safety-critical systems. Ada developers earn $90k-$150k+. Essential for government and aerospace contractors.",
+      jobProspects: "Specialized demand in defense and safety-critical systems. Ada developers earn R90k-R150k+. Essential for government and aerospace contractors.",
       realLifeApplications: "Used in military systems, air traffic control, spacecraft software, medical devices, and railway systems where safety and reliability are paramount.",
     },
     lisp: {
       name: "Lisp",
       description: "One of the oldest programming languages, known for its symbolic computation and AI research applications.",
       purpose: "Lisp is used in AI research, symbolic computation, academic research, and applications requiring dynamic code manipulation and symbolic processing.",
-      jobProspects: "Niche demand in AI research and specialized applications. Lisp developers earn $80k-$140k+. Valued in academia and AI research institutions.",
+      jobProspects: "Niche demand in AI research and specialized applications. Lisp developers earn R80k-R140k+. Valued in academia and AI research institutions.",
       realLifeApplications: "Used in AI research, computer algebra systems, CAD software, and academic research. Influenced many modern languages and programming concepts.",
     },
     prolog: {
       name: "Prolog",
       description: "A logic programming language used for artificial intelligence and computational linguistics.",
       purpose: "Prolog is used for AI applications, expert systems, natural language processing, and problems involving logical reasoning and knowledge representation.",
-      jobProspects: "Specialized demand in AI and expert systems. Prolog developers earn $70k-$130k+. Valued in academic research and specialized AI applications.",
+      jobProspects: "Specialized demand in AI and expert systems. Prolog developers earn R70k-R130k+. Valued in academic research and specialized AI applications.",
       realLifeApplications: "Used in expert systems, natural language processing, AI research, and applications requiring logical inference and knowledge-based reasoning.",
     },
     erlang: {
       name: "Erlang",
       description: "A programming language designed for building distributed, fault-tolerant, and concurrent systems.",
       purpose: "Erlang is used for telecommunications, distributed systems, real-time applications, and systems requiring high availability and fault tolerance.",
-      jobProspects: "Steady demand in telecom and distributed systems. Erlang developers earn $90k-$150k+. Valued for building highly concurrent and fault-tolerant systems.",
+      jobProspects: "Steady demand in telecom and distributed systems. Erlang developers earn R90k-R150k+. Valued for building highly concurrent and fault-tolerant systems.",
       realLifeApplications: "Used by WhatsApp, Ericsson telecom equipment, RabbitMQ message broker, and systems requiring 99.9% uptime and massive concurrency.",
     },
     graphql: {
       name: "GraphQL",
       description: "A query language and runtime for APIs that allows clients to request exactly the data they need.",
       purpose: "GraphQL is used for building flexible APIs, reducing over-fetching of data, and providing a single endpoint for complex data requirements.",
-      jobProspects: "Growing demand in modern web development! GraphQL developers earn $80k-$140k+. Increasingly adopted by companies building complex APIs.",
+      jobProspects: "Growing demand in modern web development! GraphQL developers earn R80k-R140k+. Increasingly adopted by companies building complex APIs.",
       realLifeApplications: "Used by Facebook, GitHub, Shopify, and many modern web applications. Powers flexible APIs that adapt to different client needs efficiently.",
     },
     bash: {
       name: "Bash",
       description: "A Unix shell and command language used for system administration and automation scripting.",
       purpose: "Bash is used for system administration, automation scripts, DevOps tasks, and command-line operations in Unix-like systems.",
-      jobProspects: "Essential skill for DevOps and system administrators. Combined with other skills, adds $10k-$20k+ to salaries. Critical for automation and deployment.",
+      jobProspects: "Essential skill for DevOps and system administrators. Combined with other skills, adds R100k-R200k+ to salaries. Critical for automation and deployment.",
       realLifeApplications: "Used in deployment scripts, system administration, CI/CD pipelines, server management, and automation tasks across virtually all Unix-based systems.",
     },
     powershell: {
       name: "PowerShell",
       description: "Microsoft's command-line shell and scripting language for system administration and automation.",
       purpose: "PowerShell is used for Windows system administration, automation, configuration management, and cross-platform scripting tasks.",
-      jobProspects: "Strong demand in Windows environments and DevOps. PowerShell skills add $10k-$20k+ to system admin salaries. Essential for Windows automation.",
+      jobProspects: "Strong demand in Windows environments and DevOps. PowerShell skills add R100k-R200k+ to system admin salaries. Essential for Windows automation.",
       realLifeApplications: "Used in Windows server management, Office 365 administration, Azure automation, and enterprise IT environments for configuration and deployment.",
     },
     cobol: {
       name: "COBOL",
       description: "A legacy programming language still widely used in business and banking systems.",
       purpose: "COBOL is used for maintaining legacy business systems, banking applications, government systems, and large-scale transaction processing.",
-      jobProspects: "Steady demand for legacy system maintenance. COBOL developers earn $70k-$120k+. High demand due to shortage of developers and critical legacy systems.",
+      jobProspects: "Steady demand for legacy system maintenance. COBOL developers earn R70k-R120k+. High demand due to shortage of developers and critical legacy systems.",
       realLifeApplications: "Used in banking systems, government agencies, insurance companies, and mainframe applications processing billions of transactions daily.",
     },
     "f#": {
       name: "F#",
       description: "A functional-first programming language in the .NET ecosystem, combining functional and object-oriented programming.",
       purpose: "F# is used for data analysis, financial modeling, web development, and applications requiring functional programming approaches within the .NET ecosystem.",
-      jobProspects: "Growing demand in fintech and data analysis. F# developers earn $80k-$140k+. Valued for functional programming and mathematical computing.",
+      jobProspects: "Growing demand in fintech and data analysis. F# developers earn R80k-R140k+. Valued for functional programming and mathematical computing.",
       realLifeApplications: "Used in financial modeling, data analysis, web applications, and scientific computing within Microsoft's .NET ecosystem.",
     },
     assembly: {
       name: "Assembly",
       description: "Low-level programming language with direct correspondence to machine code instructions.",
       purpose: "Assembly is used for system programming, embedded systems, device drivers, performance-critical code, and reverse engineering.",
-      jobProspects: "Specialized demand in embedded systems and security. Assembly developers earn $80k-$150k+. Essential for firmware, drivers, and security research.",
+      jobProspects: "Specialized demand in embedded systems and security. Assembly developers earn R80k-R150k+. Essential for firmware, drivers, and security research.",
       realLifeApplications: "Used in embedded systems, device drivers, bootloaders, security research, and performance-critical sections of operating systems and games.",
     },
     vhdl: {
       name: "VHDL",
       description: "A hardware description language used for modeling and designing digital circuits and systems.",
       purpose: "VHDL is used for digital circuit design, FPGA programming, hardware simulation, and electronic system design in engineering.",
-      jobProspects: "Steady demand in hardware engineering. VHDL engineers earn $80k-$140k+. Essential for FPGA development and digital circuit design.",
+      jobProspects: "Steady demand in hardware engineering. VHDL engineers earn R80k-R140k+. Essential for FPGA development and digital circuit design.",
       realLifeApplications: "Used in FPGA programming, digital circuit design, aerospace systems, telecommunications equipment, and electronic system development.",
     },
     verilog: {
       name: "Verilog",
       description: "A hardware description language used for modeling electronic systems and digital circuits.",
       purpose: "Verilog is used for digital design, FPGA programming, ASIC design, and hardware verification in electronic engineering.",
-      jobProspects: "Strong demand in semiconductor industry. Verilog engineers earn $90k-$160k+. Critical for chip design and hardware development.",
+      jobProspects: "Strong demand in semiconductor industry. Verilog engineers earn R90k-R160k+. Critical for chip design and hardware development.",
       realLifeApplications: "Used in CPU design, FPGA development, ASIC design, and digital system verification in semiconductor companies and hardware engineering.",
     },
     scratch: {
       name: "Scratch",
       description: "A visual, block-based programming language designed for teaching programming concepts to beginners.",
       purpose: "Scratch is used for educational programming, teaching coding concepts to children, and introducing programming logic through visual blocks.",
-      jobProspects: "Limited direct job prospects, but valuable for education. Computer science teachers earn $45k-$80k+. Great foundation for learning other languages.",
+      jobProspects: "Limited direct job prospects, but valuable for education. Computer science teachers earn R450k-R800k+. Great foundation for learning other languages.",
       realLifeApplications: "Used in schools, coding bootcamps, educational programs, and as an introduction to programming concepts for students of all ages.",
     },
     coldfusion: {
       name: "ColdFusion",
       description: "A web application development platform and scripting language for building dynamic web applications.",
       purpose: "ColdFusion is used for rapid web application development, database integration, and building enterprise web solutions.",
-      jobProspects: "Declining demand but still used in legacy systems. ColdFusion developers earn $60k-$100k+. Mainly for maintaining existing applications.",
+      jobProspects: "Declining demand but still used in legacy systems. ColdFusion developers earn R60k-R100k+. Mainly for maintaining existing applications.",
       realLifeApplications: "Used in government agencies, legacy enterprise applications, and web systems requiring rapid development and database integration.",
     },
     groovy: {
       name: "Groovy",
       description: "A dynamic programming language for the Java platform with concise syntax and powerful features.",
       purpose: "Groovy is used for scripting, build automation (Gradle), testing, and rapid application development on the JVM.",
-      jobProspects: "Moderate demand, often combined with Java skills. Groovy developers earn $70k-$120k+. Valued for build automation and testing.",
+      jobProspects: "Moderate demand, often combined with Java skills. Groovy developers earn R70k-R120k+. Valued for build automation and testing.",
       realLifeApplications: "Used in Gradle build scripts, Jenkins automation, testing frameworks, and rapid prototyping in Java-based environments.",
     },
     crystal: {
       name: "Crystal",
       description: "A statically typed programming language with Ruby-like syntax and compile-time type checking.",
       purpose: "Crystal is used for web development, system programming, and applications requiring Ruby-like syntax with better performance.",
-      jobProspects: "Emerging language with growing interest. Crystal developers earn $70k-$130k+. Gaining traction for performance-critical Ruby-style applications.",
+      jobProspects: "Emerging language with growing interest. Crystal developers earn R70k-R130k+. Gaining traction for performance-critical Ruby-style applications.",
       realLifeApplications: "Used in web APIs, system tools, and applications where Ruby syntax is desired but performance is critical.",
     },
     ballerina: {
       name: "Ballerina",
       description: "A cloud-native programming language designed for integration and network-distributed applications.",
       purpose: "Ballerina is used for microservices, API integration, cloud-native applications, and distributed system development.",
-      jobProspects: "Emerging demand in cloud-native development. Ballerina developers earn $80k-$140k+. Growing adoption for integration and microservices.",
+      jobProspects: "Emerging demand in cloud-native development. Ballerina developers earn R80k-R140k+. Growing adoption for integration and microservices.",
       realLifeApplications: "Used in enterprise integration, microservices architectures, API development, and cloud-native applications requiring network communication.",
     },
     nim: {
       name: "Nim",
       description: "A statically typed programming language that combines efficiency, expressiveness, and elegance.",
       purpose: "Nim is used for system programming, web development, game development, and applications requiring high performance with readable code.",
-      jobProspects: "Emerging language with growing community. Nim developers earn $70k-$130k+. Gaining interest for performance-critical applications.",
+      jobProspects: "Emerging language with growing community. Nim developers earn R70k-R130k+. Gaining interest for performance-critical applications.",
       realLifeApplications: "Used in game development, web backends, system tools, and applications requiring C-like performance with Python-like syntax.",
     },
   };
@@ -362,19 +362,19 @@ function App() {
 
     // Creator check
     if (creatorKeywords.some((k) => normalized.includes(k))) {
-      return "I'm created by Uwami Mgxekwa (https://brelinx.com).";
+      return "I'm created by Uwami Mgxekwa (https://brelinx.com).\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>";
     }
 
     // Exact keyword match only
     const langKey = normalized;
     if (languageInfo[langKey]) {
       const info = languageInfo[langKey];
-      return `${info.name} — ${info.description}\n\nWhat it's for:\n${info.purpose}\n\nJob Prospects:\n${info.jobProspects}\n\nReal-Life Applications:\n${info.realLifeApplications}`;
+      return `${info.name} — ${info.description}\n\nWhat it's for:\n${info.purpose}\n\nJob Prospects:\n${info.jobProspects}\n\nReal-Life Applications:\n${info.realLifeApplications}\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
     }
 
     // Funny response for non-keywords
     const randomFunny = funnyResponses[Math.floor(Math.random() * funnyResponses.length)];
-    return randomFunny;
+    return `${randomFunny}\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
   };
 
   const parseBlocks = (messageText) => {
@@ -431,9 +431,9 @@ function App() {
         );
       }
       return (
-        <p key={`${msg.id || idx}-text-${idx}`} className="leading-relaxed whitespace-pre-line">
-          {block.content.trim()}
-        </p>
+        <div key={`${msg.id || idx}-text-${idx}`} className="leading-relaxed whitespace-pre-line">
+          <div dangerouslySetInnerHTML={{ __html: block.content.trim() }} />
+        </div>
       );
     });
   };

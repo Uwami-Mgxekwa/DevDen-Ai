@@ -76,6 +76,7 @@ function App() {
   const [lastActivity, setLastActivity] = useState(Date.now());
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [showPrompts, setShowPrompts] = useState(false);
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const isDark = theme === "dark";
   const messagesEndRef = useRef(null);
   const MAX_MESSAGE_LEN = 600;
@@ -985,6 +986,7 @@ function App() {
         setUserName(parsed.userName ?? "");
         setLearningGoals(parsed.learningGoals ?? []);
         setLastActivity(parsed.lastActivity ?? Date.now());
+        setNotificationsEnabled(parsed.notificationsEnabled ?? false);
       } catch (err) {
         console.error("Failed to load saved chat", err);
       }
@@ -995,19 +997,21 @@ function App() {
   useEffect(() => {
     localStorage.setItem(
       "devden-chat",
-      JSON.stringify({ messages, theme, fontSize, reduceMotion, userName, learningGoals, lastActivity })
+      JSON.stringify({ messages, theme, fontSize, reduceMotion, userName, learningGoals, lastActivity, notificationsEnabled })
     );
-  }, [messages, theme, fontSize, reduceMotion, userName, learningGoals, lastActivity]);
+  }, [messages, theme, fontSize, reduceMotion, userName, learningGoals, lastActivity, notificationsEnabled]);
 
-  // Notification system for inactive users
+  // Notification system for inactive users (only if enabled)
   useEffect(() => {
+    if (!notificationsEnabled) return;
+
     const checkInactivity = () => {
       const now = Date.now();
       const timeSinceLastActivity = now - lastActivity;
       const oneHour = 60 * 60 * 1000; // 1 hour in milliseconds
 
       if (timeSinceLastActivity > oneHour && userName && messages.length > 0) {
-        // Show notification if browser supports it
+        // Show notification if browser supports it and permission is granted
         if ('Notification' in window && Notification.permission === 'granted') {
           new Notification('DevDen Assistant', {
             body: `Hey ${userName}! Haven't learned about a new language in a while. Come back and explore more!`,
@@ -1017,15 +1021,10 @@ function App() {
       }
     };
 
-    // Request notification permission on first load
-    if ('Notification' in window && Notification.permission === 'default') {
-      Notification.requestPermission();
-    }
-
     // Check inactivity every 30 minutes
     const interval = setInterval(checkInactivity, 30 * 60 * 1000);
     return () => clearInterval(interval);
-  }, [lastActivity, userName, messages]);
+  }, [lastActivity, userName, messages, notificationsEnabled]);
 
   // Close export menu when clicking outside
   useEffect(() => {
@@ -1068,6 +1067,25 @@ function App() {
     setMessages([]);
     setUserName("");
     setAwaitingName(false);
+  };
+
+  const toggleNotifications = async () => {
+    if (!notificationsEnabled) {
+      // Request permission when enabling notifications
+      if ('Notification' in window) {
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+          setNotificationsEnabled(true);
+        } else {
+          alert('Notification permission denied. You can enable it later in your browser settings.');
+        }
+      } else {
+        alert('Notifications are not supported in your browser.');
+      }
+    } else {
+      // Simply disable notifications
+      setNotificationsEnabled(false);
+    }
   };
 
   return (
@@ -1460,6 +1478,22 @@ function App() {
                     className="accent-[var(--accent)]"
                   />
                   <span className="text-sm text-[var(--muted-strong)]">Minimize animations</span>
+                </label>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div className="flex flex-col">
+                  <span className="text-[var(--muted-strong)]">Inactivity reminders</span>
+                  <span className="text-xs text-[var(--muted)] mt-1">Get notified after 1 hour of inactivity</span>
+                </div>
+                <label className="inline-flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={notificationsEnabled}
+                    onChange={toggleNotifications}
+                    className="accent-[var(--accent)]"
+                  />
+                  <span className="text-sm text-[var(--muted-strong)]">Enable notifications</span>
                 </label>
               </div>
             </div>

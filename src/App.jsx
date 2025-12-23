@@ -81,11 +81,11 @@ function App() {
   const MAX_MESSAGE_LEN = 600;
 
   const funnyResponses = [
-    "Learn to follow instructions, smarty pants! Just type a language keyword like HTML, Java, or JavaScript.",
-    "Uwami doesn't like it when people don't listen! Enter a programming language keyword only (e.g., HTML, Python, Java).",
-    "Oops! I only understand language keywords. Try: HTML, CSS, JavaScript, Python, Java, C++, SQL, etc.",
-    "Nice try! But I'm a simple bot—just give me a language name like 'Python' or 'React' and I'll tell you all about it!",
-    "Hey there! I only respond to programming language keywords. Type something like 'HTML' or 'Java' to get started!",
+    "I can see you're trying to communicate, but I'm specifically designed to help with programming languages! Check out the quick prompts below or try typing a language name like HTML, Python, or JavaScript.",
+    "Hmm, I didn't quite catch that! I specialize in programming languages. You can use the quick prompts below or type any programming language name to get started.",
+    "I'm here to help you learn about programming languages! Take a look at the suggestions below or type a language name like React, Java, or CSS.",
+    "Not sure what you're looking for? I'm your programming language expert! Try the quick prompts below or type any coding language you're curious about.",
+    "I speak programming languages! Check out the quick prompts below or type something like Python, JavaScript, or HTML to learn more.",
   ];
 
   const languageInfo = {
@@ -423,6 +423,86 @@ function App() {
   const quickPrompts = ["HTML", "CSS", "JavaScript", "Python", "Java", "TypeScript", "C", "Rust", "Go"];
   const goalPrompts = ["I want to learn web development", "I want to learn mobile development", "I want to learn data science", "I want to learn game development"];
 
+  // Fuzzy matching for language names
+  const findClosestLanguage = (input) => {
+    const languages = Object.keys(languageInfo);
+    const inputLower = input.toLowerCase().replace(/\s+/g, '');
+    
+    // Direct match first
+    if (languages.includes(inputLower)) {
+      return { match: inputLower, confidence: 1 };
+    }
+    
+    // Check for common variations and typos
+    const variations = {
+      'typescript': ['type script', 'ts', 'typescrypt', 'typescipt'],
+      'javascript': ['java script', 'js', 'javascrypt', 'javasript', 'javscript'],
+      'c++': ['cpp', 'c plus plus', 'cplusplus', 'c plus', 'cplus'],
+      'c#': ['csharp', 'c sharp', 'c-sharp', 'csharp', 'c#'],
+      'objective-c': ['objc', 'objective c', 'obj-c', 'objectivec'],
+      'nodejs': ['node js', 'node.js', 'node', 'nodjs'],
+      'f#': ['fsharp', 'f sharp', 'f-sharp']
+    };
+    
+    // Check variations
+    for (const [lang, vars] of Object.entries(variations)) {
+      if (vars.some(v => inputLower.includes(v.replace(/\s+/g, '')) || v.replace(/\s+/g, '').includes(inputLower))) {
+        return { match: lang, confidence: 0.8 };
+      }
+    }
+    
+    // Fuzzy matching using simple string similarity
+    let bestMatch = null;
+    let bestScore = 0;
+    
+    for (const lang of languages) {
+      const similarity = calculateSimilarity(inputLower, lang);
+      if (similarity > bestScore && similarity > 0.6) {
+        bestScore = similarity;
+        bestMatch = lang;
+      }
+    }
+    
+    return bestMatch ? { match: bestMatch, confidence: bestScore } : null;
+  };
+  
+  // Simple string similarity calculation
+  const calculateSimilarity = (str1, str2) => {
+    const longer = str1.length > str2.length ? str1 : str2;
+    const shorter = str1.length > str2.length ? str2 : str1;
+    
+    if (longer.length === 0) return 1.0;
+    
+    const editDistance = levenshteinDistance(longer, shorter);
+    return (longer.length - editDistance) / longer.length;
+  };
+  
+  // Levenshtein distance calculation
+  const levenshteinDistance = (str1, str2) => {
+    const matrix = [];
+    
+    for (let i = 0; i <= str2.length; i++) {
+      matrix[i] = [i];
+    }
+    
+    for (let j = 0; j <= str1.length; j++) {
+      matrix[0][j] = j;
+    }
+    
+    for (let i = 1; i <= str2.length; i++) {
+      for (let j = 1; j <= str1.length; j++) {
+        if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
+          matrix[i][j] = matrix[i - 1][j - 1];
+        } else {
+          matrix[i][j] = Math.min(
+            matrix[i - 1][j - 1] + 1,
+            matrix[i][j - 1] + 1,
+            matrix[i - 1][j] + 1
+          );
+        }
+      }
+    }
+    
   const bannedWords = ["spam", "hack", "virus", "malware", "inappropriate"];
 
   // Voice input functionality
@@ -619,6 +699,7 @@ function App() {
     }
     return null;
   };
+  };
 
   const getBotReply = (text) => {
     const normalized = text.trim().toLowerCase();
@@ -626,6 +707,8 @@ function App() {
     const greetingKeywords = ["hi", "hey", "hello", "wassup", "what's up", "whatsup", "what's good", "howzit", "sup", "yo", "good morning", "good afternoon", "good evening"];
     const timeKeywords = ["time", "what time", "current time"];
     const dateKeywords = ["date", "what date", "today", "current date"];
+    const nameKeywords = ["my name", "what is my name", "what's my name", "who am i", "do you remember my name"];
+    const howAreYouKeywords = ["how are you", "how you doing", "how's it going", "what's up", "how do you feel"];
 
     // Update last activity
     setLastActivity(Date.now());
@@ -638,6 +721,28 @@ function App() {
         setAwaitingName(false);
         return `Nice to meet you, ${name}! <SmileIcon /> I'm your DevDen Assistant. I can help you learn about programming languages and their career prospects. Just type a language keyword like HTML, Python, JavaScript, or any other programming language to get started!\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
       }
+    }
+
+    // Check for name queries
+    if (nameKeywords.some(keyword => normalized.includes(keyword))) {
+      if (userName) {
+        return `Your name is ${userName}! <SmileIcon /> What programming language would you like to learn about today?\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+      } else {
+        return `I don't know your name yet! What should I call you?\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+      }
+    }
+
+    // Check for "how are you" type questions
+    if (howAreYouKeywords.some(keyword => normalized.includes(keyword))) {
+      const responses = [
+        "I'm doing great, thanks for asking! And yourself?",
+        "Fantastic, thank you! How about you?",
+        "I'm excellent, thanks! How are you doing?",
+        "Great, thanks! And how are you today?",
+        "I'm wonderful, thank you for asking! How about yourself?"
+      ];
+      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+      return `${randomResponse} What programming language would you like to learn about today?\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
     }
 
     // Check for learning goals
@@ -686,14 +791,21 @@ function App() {
       return "I'm created by Uwami Mgxekwa, the CEO and founder of <a href='https://brelinx.com' target='_blank' rel='noopener noreferrer' style='color: var(--accent); text-decoration: underline; text-underline-offset: 4px;'>brelinx.com</a> <UserIcon />. He's passionate about technology and helping people learn programming!\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>";
     }
 
-    // Exact keyword match only
+    // Exact keyword match first
     const langKey = normalized;
     if (languageInfo[langKey]) {
       const info = languageInfo[langKey];
       return `${info.name} — ${info.description}\n\nWhat it's for:\n${info.purpose}\n\nJob Prospects:\n${info.jobProspects}\n\nReal-Life Applications:\n${info.realLifeApplications}\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
     }
 
-    // Funny response for non-keywords
+    // Try fuzzy matching for potential typos
+    const fuzzyMatch = findClosestLanguage(text);
+    if (fuzzyMatch && fuzzyMatch.confidence > 0.7) {
+      const suggestedLang = languageInfo[fuzzyMatch.match];
+      return `Did you mean "${suggestedLang.name}"? <TargetIcon /> If so, just type "yes" or "${fuzzyMatch.match}" to learn more about it!\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+    }
+
+    // Fallback response for unrecognized input
     const randomFunny = funnyResponses[Math.floor(Math.random() * funnyResponses.length)];
     return `${randomFunny}\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
   };

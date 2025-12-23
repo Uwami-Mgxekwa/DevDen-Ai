@@ -4,12 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "deploy": "gh-pages -d dist"
-  
+  "dev": "vite",
+  "build": "vite build",
+  "preview": "vite preview",
+  "deploy": "gh-pages -d dist",
+  "release": "npm run build && npm run deploy"
   },
   "dependencies": {
     "react": "^19.2.0",

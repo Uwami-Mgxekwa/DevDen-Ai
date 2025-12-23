@@ -6,10 +6,29 @@ function App() {
   const [theme, setTheme] = useState("light");
   const isDark = theme === "dark";
 
+  const getBotReply = (text) => {
+    const normalized = text.toLowerCase();
+    const creatorKeywords = ["creator", "boss", "maker", "made you", "owner", "who built you"];
+
+    const matchesCreator = creatorKeywords.some((k) => normalized.includes(k));
+
+    if (matchesCreator) {
+      return "I'm created by Uwami Mgxekwa (https://brelinx.com).";
+    }
+
+    return "Thanks for the message! Ask me anything about code—I can reference the latest ai_coding dataset and I'm powered by brelinx.com.";
+  };
+
   const handleSend = () => {
     if (!input.trim()) return;
-    setMessages([...messages, { text: input, sender: "user" }]);
+    const userText = input;
+    setMessages((prev) => [...prev, { text: userText, sender: "user" }]);
     setInput("");
+
+    const botReply = getBotReply(userText);
+    setTimeout(() => {
+      setMessages((prev) => [...prev, { text: botReply, sender: "bot" }]);
+    }, 250);
   };
 
   const handleKeyDown = (e) => {

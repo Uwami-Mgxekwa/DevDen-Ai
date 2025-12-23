@@ -1,3 +1,15 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+:root {
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: #0f172a;
+  background: #f8fafc;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at 20% 20%, #ecfeff 0, transparent 25%),
+    radial-gradient(circle at 80% 0%, #dcfce7 0, transparent 20%),
+    #f8fafc;
+}

@@ -1,22 +1,43 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function App() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [theme, setTheme] = useState("light");
   const isDark = theme === "dark";
+  const messagesEndRef = useRef(null);
 
   const getBotReply = (text) => {
     const normalized = text.toLowerCase();
     const creatorKeywords = ["creator", "boss", "maker", "made you", "owner", "who built you"];
+    const greetingKeywords = ["hi", "hello", "hey"];
+    const wellbeingKeywords = ["how are you", "how are u", "how r u"];
 
-    const matchesCreator = creatorKeywords.some((k) => normalized.includes(k));
-
-    if (matchesCreator) {
+    if (creatorKeywords.some((k) => normalized.includes(k))) {
       return "I'm created by Uwami Mgxekwa (https://brelinx.com).";
     }
 
-    return "Thanks for the message! Ask me anything about code—I can reference the latest ai_coding dataset and I'm powered by brelinx.com.";
+    if (wellbeingKeywords.some((k) => normalized.includes(k))) {
+      return "Doing great and ready to help with your code questions!";
+    }
+
+    if (greetingKeywords.some((k) => normalized === k || normalized.startsWith(`${k} `))) {
+      return "Hi there! What can I help you build today?";
+    }
+
+    if (normalized.includes("html")) {
+      return "Need HTML help? I can outline structure, semantics, or responsive patterns.";
+    }
+
+    if (normalized.includes("java")) {
+      return "Java help? Tell me the topic—OOP, streams, Spring, or debugging.";
+    }
+
+    if (normalized.includes("javascript") || normalized.includes("js")) {
+      return "JavaScript help? Ask about async, DOM, React patterns, or debugging.";
+    }
+
+    return `Got it: "${text}". Tell me more details so I can help.`;
   };
 
   const handleSend = () => {
@@ -30,6 +51,10 @@ function App() {
       setMessages((prev) => [...prev, { text: botReply, sender: "bot" }]);
     }, 250);
   };
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, theme]);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -94,6 +119,7 @@ function App() {
               </div>
             ))
           )}
+          <div ref={messagesEndRef} />
         </div>
 
         <div className="p-4 sm:p-5 border-t border-[color:var(--panel-border)] bg-[var(--panel-footer)] backdrop-blur">

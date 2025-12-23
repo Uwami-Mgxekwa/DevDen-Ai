@@ -229,7 +229,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetch("/data/ai_coding_dataset_large.json")
+    const url = `${import.meta.env.BASE_URL}data/ai_coding_dataset_large.json`;
+    fetch(url)
       .then((res) => res.json())
       .then((data) => {
         setDatasetItems(Array.isArray(data) ? data : []);

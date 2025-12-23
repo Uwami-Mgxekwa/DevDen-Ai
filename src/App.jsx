@@ -1116,7 +1116,11 @@ function App() {
             </div>
             <button
               onClick={handleSend}
-              className="inline-flex items-center justify-center gap-2 bg-[var(--accent)] text-white px-4 py-3 rounded-2xl font-medium shadow-[0_8px_30px_var(--accent-shadow)] hover:bg-[var(--accent-strong)] active:translate-y-[1px] transition w-full sm:w-auto"
+              className={`inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl font-medium active:translate-y-[1px] transition w-full sm:w-auto ${
+                isDark 
+                  ? 'bg-white text-black shadow-[0_8px_30px_rgba(255,255,255,0.3)] hover:bg-gray-100' 
+                  : 'bg-black text-white shadow-[0_8px_30px_rgba(0,0,0,0.3)] hover:bg-gray-800'
+              }`}
             >
               <span>Send</span>
               <span className="text-lg leading-none">↗</span>

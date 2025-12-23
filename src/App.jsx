@@ -69,6 +69,7 @@ function App() {
   const [isListening, setIsListening] = useState(false);
   const [lastActivity, setLastActivity] = useState(Date.now());
   const [showExportMenu, setShowExportMenu] = useState(false);
+  const [showPrompts, setShowPrompts] = useState(false);
   const isDark = theme === "dark";
   const messagesEndRef = useRef(null);
   const MAX_MESSAGE_LEN = 600;
@@ -955,78 +956,91 @@ function App() {
       style={{ fontSize: "var(--app-font-size)" }}
     >
       <div className="w-full max-w-[520px] sm:max-w-[640px] lg:max-w-[780px] h-[90vh] sm:h-[88vh] max-h-[960px] bg-[var(--panel-bg)] text-[var(--text-primary)] backdrop-blur-xl border border-[color:var(--panel-border)] shadow-[var(--panel-shadow)] rounded-3xl sm:rounded-[28px] flex flex-col overflow-hidden transition-colors duration-300">
-        <header className="p-4 sm:p-5 border-b border-[color:var(--panel-border)] bg-[var(--panel-header)] flex items-start sm:items-center justify-between gap-3 flex-wrap">
+        <header className="p-3 sm:p-5 border-b border-[color:var(--panel-border)] bg-[var(--panel-header)] flex items-center justify-between gap-2">
           <div className="space-y-1">
-            <p className="text-sm uppercase tracking-[0.2em] text-[var(--muted)]">Chat</p>
-            <h1 className="text-xl font-semibold text-[var(--text-primary)]">DevDen Assistant</h1>
+            <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-[var(--muted)]">Chat</p>
+            <h1 className="text-lg sm:text-xl font-semibold text-[var(--text-primary)]">DevDen Assistant</h1>
           </div>
-          <div className="flex items-center gap-3 flex-wrap justify-end">
-            <a
-              href="https://uwami-mgxekwa.github.io/DevDen/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm font-medium hover:border-[color:var(--accent-soft)] transition text-[var(--text-primary)]"
-            >
-              <span>← Back to DevDen</span>
-            </a>
-            {messages.length > 0 && (
-              <div className="relative export-menu-container">
-                <button
-                  onClick={() => setShowExportMenu(!showExportMenu)}
-                  className="inline-flex items-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm font-medium hover:border-[color:var(--accent-soft)] transition"
-                >
-                  <DocumentIcon /> Export Chat
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M7 10l5 5 5-5z"/>
-                  </svg>
-                </button>
-                {showExportMenu && (
-                  <div className="absolute top-full mt-2 right-0 bg-[var(--panel-bg)] border border-[color:var(--panel-border)] rounded-2xl shadow-lg z-50 min-w-[160px]">
-                    <button
-                      onClick={() => {
-                        exportChatAsPdf();
-                        setShowExportMenu(false);
-                      }}
-                      className="w-full text-left px-4 py-3 text-sm hover:bg-[var(--chip-bg)] rounded-t-2xl transition"
-                    >
-                      Export as PDF
-                    </button>
-                    <button
-                      onClick={() => {
-                        exportChatAsTxt();
-                        setShowExportMenu(false);
-                      }}
-                      className="w-full text-left px-4 py-3 text-sm hover:bg-[var(--chip-bg)] rounded-b-2xl transition border-t border-[color:var(--panel-border)]"
-                    >
-                      Export as TXT
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
-            <button
-              onClick={toggleTheme}
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm font-medium hover:border-[color:var(--accent-soft)] transition"
-            >
-              <span className="h-2.5 w-2.5 rounded-full bg-[var(--accent)] shadow-[0_0_0_6px_var(--accent-glow)]" />
-              <span>{isDark ? "Dark" : "Light"} mode</span>
-            </button>
-            <div className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-[var(--chip-bg)] border border-[color:var(--panel-border)]">
-              <span className="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_0_6px_rgba(16,185,129,0.18)]" />
-              <span className="text-sm text-[var(--muted-strong)]">Online</span>
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Mobile: Show only essential buttons */}
+            <div className="block sm:hidden">
+              <button
+                onClick={toggleSettings}
+                className="inline-flex items-center gap-1 px-2 py-2 rounded-xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-xs font-medium hover:border-[color:var(--accent-soft)] transition"
+              >
+                ⚙️
+              </button>
             </div>
-            <button
-              onClick={toggleSettings}
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm font-medium hover:border-[color:var(--accent-soft)] transition"
-            >
-              Settings
-            </button>
-            <button
-              onClick={clearChat}
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm font-medium hover:border-[color:var(--accent-soft)] transition"
-            >
-              Clear
-            </button>
+            
+            {/* Desktop: Show all buttons */}
+            <div className="hidden sm:flex items-center gap-3 flex-wrap">
+              <a
+                href="https://uwami-mgxekwa.github.io/DevDen/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm font-medium hover:border-[color:var(--accent-soft)] transition text-[var(--text-primary)]"
+              >
+                <span>← Back to DevDen</span>
+              </a>
+              {messages.length > 0 && (
+                <div className="relative export-menu-container">
+                  <button
+                    onClick={() => setShowExportMenu(!showExportMenu)}
+                    className="inline-flex items-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm font-medium hover:border-[color:var(--accent-soft)] transition"
+                  >
+                    <DocumentIcon /> Export Chat
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M7 10l5 5 5-5z"/>
+                    </svg>
+                  </button>
+                  {showExportMenu && (
+                    <div className="absolute top-full mt-2 right-0 bg-[var(--panel-bg)] border border-[color:var(--panel-border)] rounded-2xl shadow-lg z-50 min-w-[160px]">
+                      <button
+                        onClick={() => {
+                          exportChatAsPdf();
+                          setShowExportMenu(false);
+                        }}
+                        className="w-full text-left px-4 py-3 text-sm hover:bg-[var(--chip-bg)] rounded-t-2xl transition"
+                      >
+                        Export as PDF
+                      </button>
+                      <button
+                        onClick={() => {
+                          exportChatAsTxt();
+                          setShowExportMenu(false);
+                        }}
+                        className="w-full text-left px-4 py-3 text-sm hover:bg-[var(--chip-bg)] rounded-b-2xl transition border-t border-[color:var(--panel-border)]"
+                      >
+                        Export as TXT
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+              <button
+                onClick={toggleTheme}
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm font-medium hover:border-[color:var(--accent-soft)] transition"
+              >
+                <span className="h-2.5 w-2.5 rounded-full bg-[var(--accent)] shadow-[0_0_0_6px_var(--accent-glow)]" />
+                <span>{isDark ? "Dark" : "Light"} mode</span>
+              </button>
+              <div className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-[var(--chip-bg)] border border-[color:var(--panel-border)]">
+                <span className="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_0_6px_rgba(16,185,129,0.18)]" />
+                <span className="text-sm text-[var(--muted-strong)]">Online</span>
+              </div>
+              <button
+                onClick={toggleSettings}
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm font-medium hover:border-[color:var(--accent-soft)] transition"
+              >
+                Settings
+              </button>
+              <button
+                onClick={clearChat}
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm font-medium hover:border-[color:var(--accent-soft)] transition"
+              >
+                Clear
+              </button>
+            </div>
           </div>
         </header>
 
@@ -1071,7 +1085,7 @@ function App() {
           <div ref={messagesEndRef} />
         </div>
 
-        <div className="p-4 sm:p-5 border-t border-[color:var(--panel-border)] bg-[var(--panel-footer)] backdrop-blur">
+        <div className="p-3 sm:p-5 border-t border-[color:var(--panel-border)] bg-[var(--panel-footer)] backdrop-blur">
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch sm:items-center">
             <div className="flex-1 flex gap-2">
               <input
@@ -1083,8 +1097,8 @@ function App() {
                   awaitingName 
                     ? "What's your name?" 
                     : userName 
-                      ? `Hi ${userName}! Enter a language keyword (e.g., HTML, Python, Java)...`
-                      : "Say hi to get started, or enter a language keyword (e.g., HTML, Python, Java)..."
+                      ? `Hi ${userName}! Enter a language keyword...`
+                      : "Say hi to get started, or enter a language keyword..."
                 }
               />
               <button
@@ -1108,28 +1122,84 @@ function App() {
               <span className="text-lg leading-none">↗</span>
             </button>
           </div>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {quickPrompts.map((prompt) => (
-              <button
-                key={prompt}
-                onClick={() => setInput(prompt)}
-                className="px-3 py-2 rounded-full border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-xs text-[var(--muted-strong)] hover:border-[color:var(--accent-soft)]"
+          
+          {/* Mobile: Collapsible prompts */}
+          <div className="mt-3 block sm:hidden">
+            <button
+              onClick={() => setShowPrompts(!showPrompts)}
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-xs text-[var(--muted-strong)] hover:border-[color:var(--accent-soft)] transition"
+            >
+              <span>Quick Prompts</span>
+              <svg 
+                width="12" 
+                height="12" 
+                viewBox="0 0 24 24" 
+                fill="currentColor"
+                className={`transition-transform ${showPrompts ? 'rotate-180' : ''}`}
               >
-                {prompt}
-              </button>
-            ))}
+                <path d="M7 10l5 5 5-5z"/>
+              </svg>
+            </button>
+            {showPrompts && (
+              <div className="mt-2 space-y-2">
+                <div className="flex flex-wrap gap-2">
+                  {quickPrompts.slice(0, 6).map((prompt) => (
+                    <button
+                      key={prompt}
+                      onClick={() => {
+                        setInput(prompt);
+                        setShowPrompts(false);
+                      }}
+                      className="px-3 py-2 rounded-full border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-xs text-[var(--muted-strong)] hover:border-[color:var(--accent-soft)]"
+                    >
+                      {prompt}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {goalPrompts.slice(0, 2).map((prompt) => (
+                    <button
+                      key={prompt}
+                      onClick={() => {
+                        setInput(prompt);
+                        setShowPrompts(false);
+                      }}
+                      className="px-3 py-2 rounded-full border border-[color:var(--accent-soft)] bg-[var(--accent-glow)] text-xs text-[var(--accent)] hover:bg-[var(--accent-soft)] hover:text-white"
+                    >
+                      {prompt.replace('I want to learn ', '')}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {goalPrompts.map((prompt) => (
-              <button
-                key={prompt}
-                onClick={() => setInput(prompt)}
-                className="px-3 py-2 rounded-full border border-[color:var(--accent-soft)] bg-[var(--accent-glow)] text-xs text-[var(--accent)] hover:bg-[var(--accent-soft)] hover:text-white"
-              >
-                {prompt}
-              </button>
-            ))}
+
+          {/* Desktop: Always visible prompts */}
+          <div className="hidden sm:block">
+            <div className="mt-3 flex flex-wrap gap-2">
+              {quickPrompts.map((prompt) => (
+                <button
+                  key={prompt}
+                  onClick={() => setInput(prompt)}
+                  className="px-3 py-2 rounded-full border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-xs text-[var(--muted-strong)] hover:border-[color:var(--accent-soft)]"
+                >
+                  {prompt}
+                </button>
+              ))}
+            </div>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {goalPrompts.map((prompt) => (
+                <button
+                  key={prompt}
+                  onClick={() => setInput(prompt)}
+                  className="px-3 py-2 rounded-full border border-[color:var(--accent-soft)] bg-[var(--accent-glow)] text-xs text-[var(--accent)] hover:bg-[var(--accent-soft)] hover:text-white"
+                >
+                  {prompt}
+                </button>
+              ))}
+            </div>
           </div>
+
           <div className="mt-3 flex items-center justify-center text-xs font-medium text-[var(--muted-strong)] gap-1">
             <span>Powered by</span>
             <a
@@ -1146,19 +1216,67 @@ function App() {
       </div>
 
       {showSettings && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center px-4">
-          <div className="w-full max-w-md bg-[var(--panel-bg)] border border-[color:var(--panel-border)] rounded-3xl p-5 shadow-[var(--panel-shadow)] space-y-4">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center px-4 z-50">
+          <div className="w-full max-w-md bg-[var(--panel-bg)] border border-[color:var(--panel-border)] rounded-3xl p-5 shadow-[var(--panel-shadow)] space-y-4 max-h-[80vh] overflow-y-auto">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold text-[var(--text-primary)]">Settings</h2>
               <button
                 onClick={toggleSettings}
                 className="text-[var(--muted-strong)] hover:text-[var(--text-primary)]"
               >
-                Close
+                ✕
               </button>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-4">
+              {/* Mobile-only actions */}
+              <div className="block sm:hidden space-y-3">
+                <div className="border-b border-[color:var(--panel-border)] pb-3">
+                  <h3 className="text-sm font-medium text-[var(--text-primary)] mb-2">Actions</h3>
+                  <div className="space-y-2">
+                    <a
+                      href="https://uwami-mgxekwa.github.io/DevDen/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-full inline-flex items-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm font-medium hover:border-[color:var(--accent-soft)] transition"
+                    >
+                      ← Back to DevDen
+                    </a>
+                    {messages.length > 0 && (
+                      <>
+                        <button
+                          onClick={() => {
+                            exportChatAsPdf();
+                            setShowSettings(false);
+                          }}
+                          className="w-full inline-flex items-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm font-medium hover:border-[color:var(--accent-soft)] transition"
+                        >
+                          <DocumentIcon /> Export as PDF
+                        </button>
+                        <button
+                          onClick={() => {
+                            exportChatAsTxt();
+                            setShowSettings(false);
+                          }}
+                          className="w-full inline-flex items-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm font-medium hover:border-[color:var(--accent-soft)] transition"
+                        >
+                          <DocumentIcon /> Export as TXT
+                        </button>
+                      </>
+                    )}
+                    <button
+                      onClick={() => {
+                        clearChat();
+                        setShowSettings(false);
+                      }}
+                      className="w-full inline-flex items-center gap-2 px-3 py-2 rounded-2xl border border-red-200 bg-red-50 text-sm font-medium text-red-600 hover:bg-red-100 transition"
+                    >
+                      Clear Chat
+                    </button>
+                  </div>
+                </div>
+              </div>
+
               <div className="flex items-center justify-between">
                 <span className="text-[var(--muted-strong)]">Theme</span>
                 <div className="flex gap-2">

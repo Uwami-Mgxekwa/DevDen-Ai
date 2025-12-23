@@ -557,6 +557,14 @@ function App() {
             <h1 className="text-xl font-semibold text-[var(--text-primary)]">DevDen Assistant</h1>
           </div>
           <div className="flex items-center gap-3 flex-wrap justify-end">
+            <a
+              href="https://uwami-mgxekwa.github.io/DevDen/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm font-medium hover:border-[color:var(--accent-soft)] transition text-[var(--text-primary)]"
+            >
+              <span>← Back to DevDen</span>
+            </a>
             <button
               onClick={toggleTheme}
               className="inline-flex items-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm font-medium hover:border-[color:var(--accent-soft)] transition"

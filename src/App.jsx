@@ -503,6 +503,9 @@ function App() {
       }
     }
     
+    return matrix[str2.length][str1.length];
+  };
+
   const bannedWords = ["spam", "hack", "virus", "malware", "inappropriate"];
 
   // Voice input functionality
@@ -698,7 +701,6 @@ function App() {
       }
     }
     return null;
-  };
   };
 
   const getBotReply = (text) => {

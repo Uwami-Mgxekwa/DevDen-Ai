@@ -41,9 +41,6 @@ function App() {
     const greetingKeywords = ["hi", "hello", "hey"];
     const wellbeingKeywords = ["how are you", "how are u", "how r u"];
 
-    const datasetHit = findDatasetSnippet(normalized);
-    if (datasetHit) return datasetHit;
-
     if (normalized.includes("system.out.println")) {
       return 'That line prints "hello world" to the console in Java using System.out.println.';
     }

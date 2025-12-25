@@ -1209,27 +1209,6 @@ function App() {
     }
   }, [reduceMotion]);
 
-  // Handle mobile viewport changes when keyboard appears
-  useEffect(() => {
-    const handleResize = () => {
-      // Update CSS custom property for viewport height
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    };
-
-    // Set initial value
-    handleResize();
-
-    // Listen for resize events (keyboard show/hide)
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('orientationchange', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('orientationchange', handleResize);
-    };
-  }, []);
-
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -1284,11 +1263,12 @@ function App() {
 
   return (
     <div
-      className="app-container min-h-screen flex items-center justify-center px-3 sm:px-6 py-4 text-[var(--text-primary)] bg-[var(--page-bg)]"
+      className="app-container min-h-screen flex items-center justify-center text-[var(--text-primary)] bg-[var(--page-bg)]"
       style={{ fontSize: "var(--app-font-size)" }}
     >
-      <div className="w-full max-w-[520px] sm:max-w-[640px] lg:max-w-[780px] h-[100vh] h-[100dvh] sm:h-[88vh] max-h-[960px] bg-[var(--panel-bg)] text-[var(--text-primary)] backdrop-blur-xl border border-[color:var(--panel-border)] shadow-[var(--panel-shadow)] rounded-none sm:rounded-[28px] flex flex-col overflow-hidden transition-colors duration-300">
-        <header className="p-3 sm:p-5 border-b border-[color:var(--panel-border)] bg-[var(--panel-header)] flex items-center justify-between gap-2">
+      <div className="mobile-chat-container sm:contents w-full flex items-center justify-center">
+        <div className="w-full max-w-[520px] sm:max-w-[640px] lg:max-w-[780px] h-full sm:h-[88vh] max-h-[960px] bg-[var(--panel-bg)] text-[var(--text-primary)] backdrop-blur-xl border-0 sm:border border-[color:var(--panel-border)] shadow-none sm:shadow-[var(--panel-shadow)] rounded-none sm:rounded-[28px] flex flex-col overflow-hidden transition-colors duration-300">
+        <header className="p-4 sm:p-5 border-b border-[color:var(--panel-border)] bg-[var(--panel-header)] flex items-center justify-between gap-2 flex-shrink-0">
           <div className="space-y-1">
             <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-[var(--muted)]">Chat</p>
             <div className="flex items-center gap-2">
@@ -1303,9 +1283,10 @@ function App() {
             <div className="block sm:hidden">
               <button
                 onClick={toggleSettings}
-                className="inline-flex items-center gap-1 px-2 py-2 rounded-xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-xs font-medium hover:border-[color:var(--accent-soft)] transition"
+                className="inline-flex items-center gap-2 px-3 py-3 rounded-xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm font-medium hover:border-[color:var(--accent-soft)] transition"
               >
                 <SettingsIcon />
+                <span className="text-xs">Settings</span>
               </button>
             </div>
             
@@ -1381,7 +1362,7 @@ function App() {
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto space-y-3 p-4 sm:p-5 bg-[var(--panel-body)]">
+        <div className="flex-1 overflow-y-auto space-y-3 p-4 sm:p-5 bg-[var(--panel-body)] min-h-0">
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center text-[var(--muted-strong)]">
               <div className="h-12 w-12 rounded-2xl bg-[var(--text-primary)] text-[var(--panel-bg)] flex items-center justify-center text-lg font-semibold shadow-lg mb-3">
@@ -1422,7 +1403,7 @@ function App() {
           <div ref={messagesEndRef} />
         </div>
 
-        <div className="p-3 sm:p-5 border-t border-[color:var(--panel-border)] bg-[var(--panel-footer)] backdrop-blur">
+        <div className="p-4 sm:p-5 border-t border-[color:var(--panel-border)] bg-[var(--panel-footer)] backdrop-blur flex-shrink-0">
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch sm:items-center">
             <div className="flex-1 flex gap-2">
               <input
@@ -1471,7 +1452,7 @@ function App() {
           <div className="mt-3 block sm:hidden">
             <button
               onClick={() => setShowPrompts(!showPrompts)}
-              className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-xs text-[var(--muted-strong)] hover:border-[color:var(--accent-soft)] transition"
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-2xl border border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-sm text-[var(--muted-strong)] hover:border-[color:var(--accent-soft)] transition"
             >
               <span>Quick Prompts</span>
               <svg 
@@ -1485,7 +1466,7 @@ function App() {
               </svg>
             </button>
             {showPrompts && (
-              <div className="mt-2 space-y-2">
+              <div className="mt-3 space-y-3">
                 <div className="flex flex-wrap gap-2">
                   {quickPrompts.slice(0, 6).map((prompt) => (
                     <button
@@ -1556,6 +1537,7 @@ function App() {
               brelinx.com
             </a>
           </div>
+        </div>
         </div>
       </div>
 

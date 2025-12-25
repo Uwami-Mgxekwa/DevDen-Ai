@@ -61,6 +61,12 @@ const SettingsIcon = () => (
   </svg>
 );
 
+const SearchIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+  </svg>
+);
+
 function App() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -77,9 +83,40 @@ function App() {
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [showPrompts, setShowPrompts] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+  const [currentModel, setCurrentModel] = useState("basic");
+  const [dailySearchCount, setDailySearchCount] = useState(0);
+  const [lastSearchDate, setLastSearchDate] = useState(new Date().toDateString());
   const isDark = theme === "dark";
   const messagesEndRef = useRef(null);
   const MAX_MESSAGE_LEN = 600;
+
+  // AI Models Configuration
+  const aiModels = {
+    basic: {
+      name: "DevDen Basic",
+      description: "Built-in programming language knowledge",
+      icon: "🎯",
+      color: "blue",
+      searchEnabled: false,
+      dailyLimit: null
+    },
+    explorer: {
+      name: "DevDen Explorer",
+      description: "Enhanced with web search (DuckDuckGo + Wikipedia)",
+      icon: "🔍",
+      color: "green",
+      searchEnabled: true,
+      dailyLimit: null
+    },
+    pro: {
+      name: "DevDen Pro",
+      description: "Premium search with Google (10 queries/day)",
+      icon: "⚡",
+      color: "purple",
+      searchEnabled: true,
+      dailyLimit: 10
+    }
+  };
 
   const funnyResponses = [
     "I can see you're trying to communicate, but I'm specifically designed to help with programming languages! Check out the quick prompts below or try typing a language name like HTML, Python, or JavaScript.",
@@ -509,6 +546,103 @@ function App() {
 
   const bannedWords = ["spam", "hack", "virus", "malware", "inappropriate"];
 
+  // Search Functions
+  const searchDuckDuckGo = async (query) => {
+    try {
+      const response = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1&skip_disambig=1`);
+      const data = await response.json();
+      return {
+        source: "DuckDuckGo",
+        abstract: data.Abstract || data.AbstractText || "",
+        url: data.AbstractURL || "",
+        relatedTopics: data.RelatedTopics?.slice(0, 3) || []
+      };
+    } catch (error) {
+      console.error("DuckDuckGo search failed:", error);
+      return null;
+    }
+  };
+
+  const searchWikipedia = async (query) => {
+    try {
+      const response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`);
+      const data = await response.json();
+      return {
+        source: "Wikipedia",
+        abstract: data.extract || "",
+        url: data.content_urls?.desktop?.page || "",
+        title: data.title || ""
+      };
+    } catch (error) {
+      console.error("Wikipedia search failed:", error);
+      return null;
+    }
+  };
+
+  const searchGoogle = async (query) => {
+    // This would require Google Custom Search API key
+    // For now, return a placeholder
+    return {
+      source: "Google",
+      abstract: "Google search results would appear here with proper API setup.",
+      url: "",
+      results: []
+    };
+  };
+
+  const performSearch = async (query) => {
+    const model = aiModels[currentModel];
+    
+    if (!model.searchEnabled) {
+      return null;
+    }
+
+    // Check daily limit for Pro model
+    if (model.dailyLimit) {
+      const today = new Date().toDateString();
+      if (lastSearchDate !== today) {
+        setDailySearchCount(0);
+        setLastSearchDate(today);
+      }
+      
+      if (dailySearchCount >= model.dailyLimit) {
+        return {
+          error: `Daily search limit reached (${model.dailyLimit} searches). Try again tomorrow or switch to DevDen Explorer for unlimited searches.`
+        };
+      }
+    }
+
+    let searchResult = null;
+
+    if (currentModel === "pro") {
+      searchResult = await searchGoogle(query);
+      if (model.dailyLimit) {
+        setDailySearchCount(prev => prev + 1);
+      }
+    } else if (currentModel === "explorer") {
+      // Try DuckDuckGo first, then Wikipedia
+      searchResult = await searchDuckDuckGo(query);
+      if (!searchResult?.abstract) {
+        searchResult = await searchWikipedia(query);
+      }
+    }
+
+    return searchResult;
+  };
+
+  // Detect if query needs search
+  const needsSearch = (query) => {
+    const searchTriggers = [
+      "latest", "current", "recent", "new", "update", "2024", "2025",
+      "what's happening", "news", "trend", "popular", "best practices",
+      "market", "salary", "job market", "hiring", "demand"
+    ];
+    
+    return searchTriggers.some(trigger => 
+      query.toLowerCase().includes(trigger)
+    );
+  };
+
   // Voice input functionality
   const startVoiceInput = () => {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
@@ -704,7 +838,7 @@ function App() {
     return null;
   };
 
-  const getBotReply = (text) => {
+  const getBotReply = async (text) => {
     const normalized = text.trim().toLowerCase();
     const creatorKeywords = ["creator", "boss", "maker", "made you", "owner", "who built you", "who created you", "founder", "ceo"];
     const greetingKeywords = ["hi", "hey", "hello", "wassup", "what's up", "whatsup", "what's good", "howzit", "sup", "yo", "good morning", "good afternoon", "good evening"];
@@ -722,7 +856,7 @@ function App() {
       if (name && name.length > 0 && !greetingKeywords.includes(normalized) && !creatorKeywords.some(k => normalized.includes(k))) {
         setUserName(name);
         setAwaitingName(false);
-        return `Nice to meet you, ${name}! <SmileIcon /> I'm your DevDen Assistant. I can help you learn about programming languages and their career prospects. Just type a language keyword like HTML, Python, JavaScript, or any other programming language to get started!\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+        return `Nice to meet you, ${name}! <SmileIcon /> I'm your DevDen Assistant running on ${aiModels[currentModel].name}. I can help you learn about programming languages and their career prospects. Just type a language keyword like HTML, Python, JavaScript, or any other programming language to get started!\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
       }
     }
 
@@ -782,16 +916,36 @@ function App() {
     // Check for greetings
     if (greetingKeywords.some(keyword => normalized.includes(keyword))) {
       if (userName) {
-        return `Hey there, ${userName}! <WaveIcon /> Great to see you again! What programming language would you like to learn about today?\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+        return `Hey there, ${userName}! <WaveIcon /> Great to see you again! I'm running on ${aiModels[currentModel].name}. What programming language would you like to learn about today?\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
       } else {
         setAwaitingName(true);
-        return `Hey there! <WaveIcon /> Welcome to DevDen Assistant! I'm here to help you learn about programming languages and career opportunities. What's your name?\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+        return `Hey there! <WaveIcon /> Welcome to DevDen Assistant! I'm running on ${aiModels[currentModel].name} and here to help you learn about programming languages and career opportunities. What's your name?\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
       }
     }
 
     // Creator check
     if (creatorKeywords.some((k) => normalized.includes(k))) {
       return "I'm created by Uwami Mgxekwa, the CEO and founder of <a href='https://brelinx.com' target='_blank' rel='noopener noreferrer' style='color: var(--accent); text-decoration: underline; text-underline-offset: 4px;'>brelinx.com</a> <UserIcon />. He's passionate about technology and helping people learn programming!\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>";
+    }
+
+    // Check if search is needed and available
+    if (needsSearch(text) && aiModels[currentModel].searchEnabled) {
+      try {
+        const searchResult = await performSearch(text);
+        
+        if (searchResult?.error) {
+          return `${searchResult.error}\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+        }
+        
+        if (searchResult?.abstract) {
+          const remainingSearches = aiModels[currentModel].dailyLimit ? 
+            (aiModels[currentModel].dailyLimit - dailySearchCount) : "unlimited";
+          
+          return `**Search Result from ${searchResult.source}:**\n\n${searchResult.abstract}\n\n${searchResult.url ? `[Read more](${searchResult.url})` : ''}\n\n*Searches remaining today: ${remainingSearches}*\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+        }
+      } catch (error) {
+        console.error("Search failed:", error);
+      }
     }
 
     // Exact keyword match first
@@ -917,7 +1071,7 @@ function App() {
     });
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
     if (input.length > MAX_MESSAGE_LEN) {
       setMessages((prev) => [
@@ -943,7 +1097,7 @@ function App() {
     setMessages((prev) => [...prev, { id: userId, text: userText, sender: "user" }]);
     setInput("");
 
-    const botReply = getBotReply(userText);
+    const botReply = await getBotReply(userText);
     streamBotReply(botReply);
   };
 
@@ -987,6 +1141,9 @@ function App() {
         setLearningGoals(parsed.learningGoals ?? []);
         setLastActivity(parsed.lastActivity ?? Date.now());
         setNotificationsEnabled(parsed.notificationsEnabled ?? false);
+        setCurrentModel(parsed.currentModel ?? "basic");
+        setDailySearchCount(parsed.dailySearchCount ?? 0);
+        setLastSearchDate(parsed.lastSearchDate ?? new Date().toDateString());
       } catch (err) {
         console.error("Failed to load saved chat", err);
       }
@@ -997,9 +1154,9 @@ function App() {
   useEffect(() => {
     localStorage.setItem(
       "devden-chat",
-      JSON.stringify({ messages, theme, fontSize, reduceMotion, userName, learningGoals, lastActivity, notificationsEnabled })
+      JSON.stringify({ messages, theme, fontSize, reduceMotion, userName, learningGoals, lastActivity, notificationsEnabled, currentModel, dailySearchCount, lastSearchDate })
     );
-  }, [messages, theme, fontSize, reduceMotion, userName, learningGoals, lastActivity, notificationsEnabled]);
+  }, [messages, theme, fontSize, reduceMotion, userName, learningGoals, lastActivity, notificationsEnabled, currentModel, dailySearchCount, lastSearchDate]);
 
   // Notification system for inactive users (only if enabled)
   useEffect(() => {
@@ -1134,7 +1291,12 @@ function App() {
         <header className="p-3 sm:p-5 border-b border-[color:var(--panel-border)] bg-[var(--panel-header)] flex items-center justify-between gap-2">
           <div className="space-y-1">
             <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-[var(--muted)]">Chat</p>
-            <h1 className="text-lg sm:text-xl font-semibold text-[var(--text-primary)]">DevDen Assistant</h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-lg sm:text-xl font-semibold text-[var(--text-primary)]">DevDen Assistant</h1>
+              <span className="text-xs px-2 py-1 rounded-full bg-[var(--chip-bg)] border border-[color:var(--panel-border)] text-[var(--muted-strong)]">
+                {aiModels[currentModel].icon} {aiModels[currentModel].name}
+              </span>
+            </div>
           </div>
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Mobile: Show only essential buttons */}
@@ -1411,6 +1573,37 @@ function App() {
             </div>
 
             <div className="space-y-4">
+              {/* Model Selection */}
+              <div className="border-b border-[color:var(--panel-border)] pb-4">
+                <h3 className="text-sm font-medium text-[var(--text-primary)] mb-3">AI Model</h3>
+                <div className="space-y-2">
+                  {Object.entries(aiModels).map(([key, model]) => (
+                    <button
+                      key={key}
+                      onClick={() => setCurrentModel(key)}
+                      className={`w-full text-left p-3 rounded-2xl border transition ${
+                        currentModel === key
+                          ? "border-[color:var(--accent-soft)] bg-[var(--accent-glow)] text-[var(--text-primary)]"
+                          : "border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-[var(--muted-strong)] hover:border-[color:var(--accent-soft)]"
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-lg">{model.icon}</span>
+                        <div className="flex-1">
+                          <div className="font-medium text-sm">{model.name}</div>
+                          <div className="text-xs text-[var(--muted)] mt-1">{model.description}</div>
+                          {key === "pro" && (
+                            <div className="text-xs text-[var(--accent)] mt-1">
+                              {dailySearchCount}/{model.dailyLimit} searches used today
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Mobile-only actions */}
               <div className="block sm:hidden space-y-3">
                 <div className="border-b border-[color:var(--panel-border)] pb-3">

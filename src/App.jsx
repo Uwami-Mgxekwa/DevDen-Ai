@@ -1051,10 +1051,46 @@ function App() {
     }
   }, [reduceMotion]);
 
+  // Handle mobile viewport changes when keyboard appears
+  useEffect(() => {
+    const handleResize = () => {
+      // Update CSS custom property for viewport height
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    // Set initial value
+    handleResize();
+
+    // Listen for resize events (keyboard show/hide)
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+    };
+  }, []);
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
       handleSend();
+    }
+  };
+
+  // Handle mobile input focus to prevent zoom
+  const handleInputFocus = (e) => {
+    // Prevent zoom on mobile by ensuring font-size is at least 16px
+    if (window.innerWidth <= 768) {
+      e.target.style.fontSize = '16px';
+    }
+  };
+
+  const handleInputBlur = (e) => {
+    // Reset font size after blur
+    if (window.innerWidth <= 768) {
+      e.target.style.fontSize = '';
     }
   };
 
@@ -1090,10 +1126,10 @@ function App() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-3 sm:px-6 py-4 text-[var(--text-primary)] bg-[var(--page-bg)]"
+      className="app-container min-h-screen flex items-center justify-center px-3 sm:px-6 py-4 text-[var(--text-primary)] bg-[var(--page-bg)]"
       style={{ fontSize: "var(--app-font-size)" }}
     >
-      <div className="w-full max-w-[520px] sm:max-w-[640px] lg:max-w-[780px] h-[90vh] sm:h-[88vh] max-h-[960px] bg-[var(--panel-bg)] text-[var(--text-primary)] backdrop-blur-xl border border-[color:var(--panel-border)] shadow-[var(--panel-shadow)] rounded-3xl sm:rounded-[28px] flex flex-col overflow-hidden transition-colors duration-300">
+      <div className="w-full max-w-[520px] sm:max-w-[640px] lg:max-w-[780px] h-[100vh] h-[100dvh] sm:h-[88vh] max-h-[960px] bg-[var(--panel-bg)] text-[var(--text-primary)] backdrop-blur-xl border border-[color:var(--panel-border)] shadow-[var(--panel-shadow)] rounded-none sm:rounded-[28px] flex flex-col overflow-hidden transition-colors duration-300">
         <header className="p-3 sm:p-5 border-b border-[color:var(--panel-border)] bg-[var(--panel-header)] flex items-center justify-between gap-2">
           <div className="space-y-1">
             <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-[var(--muted)]">Chat</p>
@@ -1227,10 +1263,13 @@ function App() {
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch sm:items-center">
             <div className="flex-1 flex gap-2">
               <input
-                className="flex-1 bg-[var(--input-bg)] border border-[color:var(--input-border)] rounded-2xl px-4 py-3 text-sm text-[var(--text-primary)] placeholder:text-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent transition"
+                className="flex-1 bg-[var(--input-bg)] border border-[color:var(--input-border)] rounded-2xl px-4 py-3 text-base text-[var(--text-primary)] placeholder:text-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent transition"
+                style={{ fontSize: '16px' }} // Prevent zoom on mobile
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
+                onFocus={handleInputFocus}
+                onBlur={handleInputBlur}
                 placeholder={
                   awaitingName 
                     ? "What's your name?" 

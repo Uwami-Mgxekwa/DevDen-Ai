@@ -1048,6 +1048,7 @@ function App() {
       document.documentElement.classList.add("reduce-motion");
     } else {
       document.documentElement.classList.remove("reduce-motion");
+      
     }
   }, [reduceMotion]);
 

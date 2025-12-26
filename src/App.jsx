@@ -83,38 +83,22 @@ function App() {
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [showPrompts, setShowPrompts] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
-  const [currentModel, setCurrentModel] = useState("basic");
-  const [dailySearchCount, setDailySearchCount] = useState(0);
-  const [lastSearchDate, setLastSearchDate] = useState(new Date().toDateString());
   const isDark = theme === "dark";
   const messagesEndRef = useRef(null);
   const MAX_MESSAGE_LEN = 600;
 
-  // AI Models Configuration
+  // Current model (simplified to single model)
+  const currentModel = "basic";
+
+  // AI Models Configuration - Only Basic Model
   const aiModels = {
     basic: {
-      name: "DevDen Basic",
-      description: "Built-in programming language knowledge",
+      name: "DevDen Assistant",
+      description: "Your programming language expert with curated 2024 knowledge",
       icon: "🎯",
       color: "blue",
       searchEnabled: false,
       dailyLimit: null
-    },
-    explorer: {
-      name: "DevDen Explorer",
-      description: "Enhanced with web search (DuckDuckGo + Wikipedia)",
-      icon: "🔍",
-      color: "green",
-      searchEnabled: true,
-      dailyLimit: null
-    },
-    pro: {
-      name: "DevDen Pro",
-      description: "Premium search with Google (10 queries/day)",
-      icon: "⚡",
-      color: "purple",
-      searchEnabled: true,
-      dailyLimit: 10
     }
   };
 
@@ -145,8 +129,10 @@ function App() {
       name: "JavaScript",
       description: "A versatile programming language that runs in browsers and on servers (Node.js).",
       purpose: "JavaScript makes websites interactive—handling user clicks, form submissions, API calls, and dynamic content updates. Also powers server-side applications with Node.js.",
-      jobProspects: "Extremely high demand! JavaScript developers are among the most sought-after. Salaries range from R58k (junior) to R125k+ (senior) per month. React, Vue, and Node.js skills significantly boost earning potential.",
-      realLifeApplications: "Used everywhere—Netflix, LinkedIn, PayPal, Uber (frontend), and many backend services. Powers interactive features on social media, e-commerce sites, and real-time applications like chat apps and gaming platforms.",
+      jobProspects: "Extremely high demand! JavaScript developers are among the most sought-after. Salaries range from R58k (junior) to R125k+ (senior) per month. React, Vue, and Node.js skills significantly boost earning potential. TypeScript adoption is at 80%+ in 2024.",
+      realLifeApplications: "Used everywhere—Netflix, LinkedIn, PayPal, Uber (frontend), and many backend services. Powers interactive features on social media, e-commerce sites, and real-time applications like chat apps and gaming platforms. ES2024 features include Temporal API and decorators.",
+      currentTrends: "TypeScript dominance, React Server Components, Edge computing, AI integration with JavaScript frameworks",
+      officialDocs: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
     },
     js: {
       name: "JavaScript",
@@ -159,8 +145,10 @@ function App() {
       name: "Python",
       description: "A high-level, interpreted programming language known for its simplicity and readability.",
       purpose: "Python is used for web development, data science, AI/ML, automation, scripting, and backend APIs. Its clean syntax makes it beginner-friendly yet powerful.",
-      jobProspects: "Exceptional demand! Python developers earn R62k-R117k+ per month. Data scientists and ML engineers using Python can earn R83k-R167k+ per month. One of the fastest-growing languages in the job market.",
-      realLifeApplications: "Powering Instagram's backend, YouTube's recommendation system, Google's search algorithms, NASA's data analysis, and countless AI/ML models. Used in finance, healthcare, automation, and scientific research.",
+      jobProspects: "Exceptional demand! Python developers earn R62k-R117k+ per month. Data scientists and ML engineers using Python can earn R83k-R167k+ per month. One of the fastest-growing languages in the job market. AI/ML skills with Python are extremely valuable in 2024.",
+      realLifeApplications: "Powering Instagram's backend, YouTube's recommendation system, Google's search algorithms, NASA's data analysis, and countless AI/ML models. Used in finance, healthcare, automation, and scientific research. Python 3.12+ offers significant performance improvements.",
+      currentTrends: "AI/ML dominance, FastAPI for web APIs, Python 3.12 performance improvements, Type hints adoption",
+      officialDocs: "https://python.org"
     },
     java: {
       name: "Java",
@@ -194,8 +182,10 @@ function App() {
       name: "React",
       description: "A popular JavaScript library for building user interfaces, developed by Facebook.",
       purpose: "React creates reusable UI components and manages application state. Used for building single-page applications, mobile apps (React Native), and interactive web interfaces.",
-      jobProspects: "Very high demand! React developers are among the most sought-after frontend roles. Salaries range from R62k-R117k+ per month. React Native adds mobile development opportunities.",
-      realLifeApplications: "Used by Facebook, Instagram, Netflix, Airbnb, WhatsApp Web, and thousands of companies. Powers modern web applications and mobile apps through React Native.",
+      jobProspects: "Very high demand! React developers are among the most sought-after frontend roles. Salaries range from R62k-R117k+ per month. React Native adds mobile development opportunities. React 19 and Server Components knowledge is highly valued in 2024.",
+      realLifeApplications: "Used by Facebook, Instagram, Netflix, Airbnb, WhatsApp Web, and thousands of companies. Powers modern web applications and mobile apps through React Native. React Server Components are revolutionizing full-stack development.",
+      currentTrends: "React Server Components, Next.js 14, React 19 features, Concurrent rendering, React Compiler",
+      officialDocs: "https://react.dev"
     },
     nodejs: {
       name: "Node.js",
@@ -257,8 +247,10 @@ function App() {
       name: "TypeScript",
       description: "A typed superset of JavaScript that compiles to plain JavaScript, developed by Microsoft.",
       purpose: "TypeScript adds static typing to JavaScript, making large codebases more maintainable and catching errors at compile time. Used for web apps, Node.js backends, and enterprise applications.",
-      jobProspects: "Very high demand! TypeScript developers are increasingly sought after. Salaries range from R67k-R125k+ per month. Many companies are migrating from JavaScript to TypeScript.",
-      realLifeApplications: "Used by Microsoft, Slack, Airbnb, and many enterprise applications. Powers large-scale web applications where type safety and maintainability are crucial.",
+      jobProspects: "Very high demand! TypeScript developers are increasingly sought after. Salaries range from R67k-R125k+ per month. Many companies are migrating from JavaScript to TypeScript. 80%+ adoption rate in new projects in 2024.",
+      realLifeApplications: "Used by Microsoft, Slack, Airbnb, and many enterprise applications. Powers large-scale web applications where type safety and maintainability are crucial. TypeScript 5.0+ brings significant improvements to developer experience.",
+      currentTrends: "Near-universal adoption, TypeScript 5.0+ features, Better React integration, Improved performance",
+      officialDocs: "https://typescriptlang.org"
     },
     perl: {
       name: "Perl",
@@ -546,101 +538,173 @@ function App() {
 
   const bannedWords = ["spam", "hack", "virus", "malware", "inappropriate"];
 
-  // Search Functions
-  const searchDuckDuckGo = async (query) => {
-    try {
-      const response = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1&skip_disambig=1`);
-      const data = await response.json();
-      return {
-        source: "DuckDuckGo",
-        abstract: data.Abstract || data.AbstractText || "",
-        url: data.AbstractURL || "",
-        relatedTopics: data.RelatedTopics?.slice(0, 3) || []
-      };
-    } catch (error) {
-      console.error("DuckDuckGo search failed:", error);
-      return null;
-    }
-  };
-
-  const searchWikipedia = async (query) => {
-    try {
-      const response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`);
-      const data = await response.json();
-      return {
-        source: "Wikipedia",
-        abstract: data.extract || "",
-        url: data.content_urls?.desktop?.page || "",
-        title: data.title || ""
-      };
-    } catch (error) {
-      console.error("Wikipedia search failed:", error);
-      return null;
-    }
-  };
-
-  const searchGoogle = async (query) => {
-    // This would require Google Custom Search API key
-    // For now, return a placeholder
-    return {
-      source: "Google",
-      abstract: "Google search results would appear here with proper API setup.",
-      url: "",
-      results: []
-    };
-  };
-
-  const performSearch = async (query) => {
-    const model = aiModels[currentModel];
+  // Smart redirect responses for current info queries
+  const getSmartRedirect = (query) => {
+    const lowerQuery = query.toLowerCase();
     
-    if (!model.searchEnabled) {
-      return null;
+    // React queries
+    if (lowerQuery.includes('react') && (lowerQuery.includes('new') || lowerQuery.includes('latest') || lowerQuery.includes('2024') || lowerQuery.includes('features'))) {
+      return `For the latest React features and updates, I recommend checking:
+
+• **Official React Blog**: [react.dev/blog](https://react.dev/blog)
+• **React GitHub Releases**: [github.com/facebook/react/releases](https://github.com/facebook/react/releases)
+• **React Documentation**: [react.dev](https://react.dev)
+
+**Recent React highlights**: React 18+ introduced Concurrent Features, Suspense improvements, and automatic batching. React Server Components are becoming mainstream in 2024.
+
+Would you like me to explain React's core concepts instead? Just type "React"!
+
+<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
     }
+    
+    // JavaScript queries
+    if (lowerQuery.includes('javascript') && (lowerQuery.includes('new') || lowerQuery.includes('latest') || lowerQuery.includes('2024') || lowerQuery.includes('features'))) {
+      return `For the latest JavaScript features and updates:
 
-    // Check daily limit for Pro model
-    if (model.dailyLimit) {
-      const today = new Date().toDateString();
-      if (lastSearchDate !== today) {
-        setDailySearchCount(0);
-        setLastSearchDate(today);
-      }
-      
-      if (dailySearchCount >= model.dailyLimit) {
-        return {
-          error: `Daily search limit reached (${model.dailyLimit} searches). Try again tomorrow or switch to DevDen Explorer for unlimited searches.`
-        };
-      }
+• **MDN JavaScript Guide**: [developer.mozilla.org/en-US/docs/Web/JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+• **ECMAScript Proposals**: [github.com/tc39/proposals](https://github.com/tc39/proposals)
+• **JavaScript Info**: [javascript.info](https://javascript.info)
+
+**ES2024 highlights**: Temporal API for better date/time handling, decorators, and improved async/await patterns.
+
+Want to learn JavaScript fundamentals? Just type "JavaScript"!
+
+<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
     }
+    
+    // Python queries
+    if (lowerQuery.includes('python') && (lowerQuery.includes('new') || lowerQuery.includes('latest') || lowerQuery.includes('2024') || lowerQuery.includes('features'))) {
+      return `For the latest Python updates:
 
-    let searchResult = null;
+• **Python.org News**: [python.org/news](https://python.org/news)
+• **Python Enhancement Proposals**: [peps.python.org](https://peps.python.org)
+• **Real Python**: [realpython.com](https://realpython.com)
 
-    if (currentModel === "pro") {
-      searchResult = await searchGoogle(query);
-      if (model.dailyLimit) {
-        setDailySearchCount(prev => prev + 1);
-      }
-    } else if (currentModel === "explorer") {
-      // Try DuckDuckGo first, then Wikipedia
-      searchResult = await searchDuckDuckGo(query);
-      if (!searchResult?.abstract) {
-        searchResult = await searchWikipedia(query);
-      }
+**Python 3.12+ highlights**: Improved error messages, performance optimizations, and better type hints.
+
+Interested in Python basics? Just type "Python"!
+
+<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
     }
+    
+    // Job market queries
+    if (lowerQuery.includes('job') || lowerQuery.includes('salary') || lowerQuery.includes('market') || lowerQuery.includes('hiring')) {
+      return `For current job market info, check these reliable sources:
 
-    return searchResult;
+• **Stack Overflow Developer Survey**: [survey.stackoverflow.co](https://survey.stackoverflow.co)
+• **GitHub State of the Octoverse**: [octoverse.github.com](https://octoverse.github.com)
+• **Local Job Sites**: Indeed, LinkedIn, AngelList for South African market
+
+**2024 Trends**: High demand for TypeScript, React, Python, and cloud skills. Remote work still strong.
+
+Want to know about a specific language's career prospects? Just type the language name!
+
+<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+    }
+    
+    // General "latest" or "new" queries
+    if (lowerQuery.includes('latest') || lowerQuery.includes('new') || lowerQuery.includes('2024') || lowerQuery.includes('current')) {
+      return `For the latest programming trends and updates:
+
+• **GitHub Trending**: [github.com/trending](https://github.com/trending)
+• **Stack Overflow Trends**: [insights.stackoverflow.com](https://insights.stackoverflow.com)
+• **Developer Roadmaps**: [roadmap.sh](https://roadmap.sh)
+
+**2024 Programming Highlights**: AI integration, TypeScript adoption, serverless computing, and edge computing are major trends.
+
+Looking for info about a specific programming language? Just type its name!
+
+<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+    }
+    
+    return null;
   };
 
-  // Detect if query needs search
-  const needsSearch = (query) => {
-    const searchTriggers = [
-      "latest", "current", "recent", "new", "update", "2024", "2025",
-      "what's happening", "news", "trend", "popular", "best practices",
-      "market", "salary", "job market", "hiring", "demand"
-    ];
+  // Enhanced responses for current/trending queries
+  const getEnhancedResponse = (query) => {
+    const queryLower = query.toLowerCase();
     
-    return searchTriggers.some(trigger => 
-      query.toLowerCase().includes(trigger)
-    );
+    // React-related queries
+    if (queryLower.includes('react') && (queryLower.includes('new') || queryLower.includes('latest') || queryLower.includes('2024') || queryLower.includes('features'))) {
+      return `**Latest React Updates (2024):**
+
+🚀 **React 19 Features:**
+• Server Components (stable)
+• Concurrent rendering improvements
+• New React Compiler (experimental)
+• Enhanced Suspense boundaries
+• Improved TypeScript support
+
+💼 **Job Market:** React developers are in extremely high demand with salaries ranging R70k-R130k+ per month in South Africa.
+
+📈 **Trending:** React Server Components and Next.js 14 are the hottest topics in the React ecosystem right now.
+
+<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+    }
+    
+    // JavaScript trends
+    if (queryLower.includes('javascript') && (queryLower.includes('trend') || queryLower.includes('latest') || queryLower.includes('2024'))) {
+      return `**JavaScript Trends 2024:**
+
+🔥 **Hot Technologies:**
+• TypeScript adoption at 87%
+• Bun.js (faster Node.js alternative)
+• Astro for static sites
+• Vite for build tooling
+• Web Components gaining traction
+
+💰 **Market:** JavaScript developers earn R60k-R140k+ per month. TypeScript skills add 20-30% salary premium.
+
+🎯 **Focus Areas:** Full-stack development, serverless functions, and edge computing are trending.
+
+<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+    }
+    
+    // Python updates
+    if (queryLower.includes('python') && (queryLower.includes('latest') || queryLower.includes('new') || queryLower.includes('2024'))) {
+      return `**Python Updates 2024:**
+
+🐍 **Python 3.12 Features:**
+• 15% performance improvements
+• Better error messages
+• New f-string syntax
+• Improved typing system
+• Enhanced asyncio
+
+📊 **AI/ML Boom:** Python dominates AI development with ChatGPT, Copilot, and ML frameworks driving massive demand.
+
+💼 **Salaries:** Python developers earn R65k-R120k+, AI/ML specialists earn R90k-R180k+ per month.
+
+<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+    }
+    
+    // Job market queries
+    if (queryLower.includes('job') && queryLower.includes('market')) {
+      const lang = extractLanguageFromQuery(queryLower);
+      if (lang && languageInfo[lang]) {
+        return `**${languageInfo[lang].name} Job Market 2024:**
+
+📈 **Current Demand:** ${languageInfo[lang].jobProspects}
+
+🌍 **South African Market:**
+• Remote work opportunities increasing
+• Fintech and e-commerce sectors growing
+• International companies hiring locally
+• Startup ecosystem expanding
+
+💡 **Pro Tip:** Combine ${languageInfo[lang].name} with cloud sAWS, Azure) for 25-40% salary boost.
+
+<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+      }
+    }
+    
+    return null;
+  };
+  
+  // Extract programming language from query
+  const extractLanguageFromQuery = (query) => {
+    const languages = Object.keys(languageInfo);
+    return languages.find(lang => query.includes(lang));
   };
 
   // Voice input functionality
@@ -928,31 +992,30 @@ function App() {
       return "I'm created by Uwami Mgxekwa, the CEO and founder of <a href='https://brelinx.com' target='_blank' rel='noopener noreferrer' style='color: var(--accent); text-decoration: underline; text-underline-offset: 4px;'>brelinx.com</a> <UserIcon />. He's passionate about technology and helping people learn programming!\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>";
     }
 
-    // Check if search is needed and available
-    if (needsSearch(text) && aiModels[currentModel].searchEnabled) {
-      try {
-        const searchResult = await performSearch(text);
-        
-        if (searchResult?.error) {
-          return `${searchResult.error}\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
-        }
-        
-        if (searchResult?.abstract) {
-          const remainingSearches = aiModels[currentModel].dailyLimit ? 
-            (aiModels[currentModel].dailyLimit - dailySearchCount) : "unlimited";
-          
-          return `**Search Result from ${searchResult.source}:**\n\n${searchResult.abstract}\n\n${searchResult.url ? `[Read more](${searchResult.url})` : ''}\n\n*Searches remaining today: ${remainingSearches}*\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
-        }
-      } catch (error) {
-        console.error("Search failed:", error);
-      }
+    // Check for smart redirect queries (latest, new features, etc.)
+    const smartRedirect = getSmartRedirect(text);
+    if (smartRedirect) {
+      return smartRedirect;
     }
 
     // Exact keyword match first
     const langKey = normalized;
     if (languageInfo[langKey]) {
       const info = languageInfo[langKey];
-      return `${info.name} — ${info.description}\n\nWhat it's for:\n${info.purpose}\n\nJob Prospects:\n${info.jobProspects}\n\nReal-Life Applications:\n${info.realLifeApplications}\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+      let response = `${info.name} — ${info.description}\n\nWhat it's for:\n${info.purpose}\n\nJob Prospects:\n${info.jobProspects}\n\nReal-Life Applications:\n${info.realLifeApplications}`;
+      
+      // Add 2024 trends if available
+      if (info.currentTrends) {
+        response += `\n\n2024 Trends:\n${info.currentTrends}`;
+      }
+      
+      // Add official docs if available
+      if (info.officialDocs) {
+        response += `\n\nOfficial Documentation: ${info.officialDocs}`;
+      }
+      
+      response += `\n\n<span style='color: #999; font-size: 0.75rem; opacity: 0.6;'>powered by brelinx.com</span>`;
+      return response;
     }
 
     // Try fuzzy matching for potential typos
@@ -1141,9 +1204,6 @@ function App() {
         setLearningGoals(parsed.learningGoals ?? []);
         setLastActivity(parsed.lastActivity ?? Date.now());
         setNotificationsEnabled(parsed.notificationsEnabled ?? false);
-        setCurrentModel(parsed.currentModel ?? "basic");
-        setDailySearchCount(parsed.dailySearchCount ?? 0);
-        setLastSearchDate(parsed.lastSearchDate ?? new Date().toDateString());
       } catch (err) {
         console.error("Failed to load saved chat", err);
       }
@@ -1154,9 +1214,9 @@ function App() {
   useEffect(() => {
     localStorage.setItem(
       "devden-chat",
-      JSON.stringify({ messages, theme, fontSize, reduceMotion, userName, learningGoals, lastActivity, notificationsEnabled, currentModel, dailySearchCount, lastSearchDate })
+      JSON.stringify({ messages, theme, fontSize, reduceMotion, userName, learningGoals, lastActivity, notificationsEnabled })
     );
-  }, [messages, theme, fontSize, reduceMotion, userName, learningGoals, lastActivity, notificationsEnabled, currentModel, dailySearchCount, lastSearchDate]);
+  }, [messages, theme, fontSize, reduceMotion, userName, learningGoals, lastActivity, notificationsEnabled]);
 
   // Notification system for inactive users (only if enabled)
   useEffect(() => {
@@ -1273,9 +1333,6 @@ function App() {
             <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-[var(--muted)]">Chat</p>
             <div className="flex items-center gap-2">
               <h1 className="text-lg sm:text-xl font-semibold text-[var(--text-primary)]">DevDen Assistant</h1>
-              <span className="text-xs px-2 py-1 rounded-full bg-[var(--chip-bg)] border border-[color:var(--panel-border)] text-[var(--muted-strong)]">
-                {aiModels[currentModel].icon} {aiModels[currentModel].name}
-              </span>
             </div>
           </div>
           <div className="flex items-center gap-2 sm:gap-3">
@@ -1555,37 +1612,6 @@ function App() {
             </div>
 
             <div className="space-y-4">
-              {/* Model Selection */}
-              <div className="border-b border-[color:var(--panel-border)] pb-4">
-                <h3 className="text-sm font-medium text-[var(--text-primary)] mb-3">AI Model</h3>
-                <div className="space-y-2">
-                  {Object.entries(aiModels).map(([key, model]) => (
-                    <button
-                      key={key}
-                      onClick={() => setCurrentModel(key)}
-                      className={`w-full text-left p-3 rounded-2xl border transition ${
-                        currentModel === key
-                          ? "border-[color:var(--accent-soft)] bg-[var(--accent-glow)] text-[var(--text-primary)]"
-                          : "border-[color:var(--panel-border)] bg-[var(--chip-bg)] text-[var(--muted-strong)] hover:border-[color:var(--accent-soft)]"
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="text-lg">{model.icon}</span>
-                        <div className="flex-1">
-                          <div className="font-medium text-sm">{model.name}</div>
-                          <div className="text-xs text-[var(--muted)] mt-1">{model.description}</div>
-                          {key === "pro" && (
-                            <div className="text-xs text-[var(--accent)] mt-1">
-                              {dailySearchCount}/{model.dailyLimit} searches used today
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
               {/* Mobile-only actions */}
               <div className="block sm:hidden space-y-3">
                 <div className="border-b border-[color:var(--panel-border)] pb-3">
